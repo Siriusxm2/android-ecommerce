@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gny_backend/dimensions.dart';
+import 'package:gny_backend/screens/orders_page.dart';
 import 'package:gny_backend/screens/products_page.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -27,6 +28,21 @@ class HomeScreen extends StatelessWidget {
                 child: const Card(
                   child: Center(
                     child: Text('Go To Products'),
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              width: double.infinity,
+              height: Dimensions.height150,
+              padding: EdgeInsets.symmetric(horizontal: Dimensions.width10),
+              child: InkWell(
+                onTap: () {
+                  Get.to(() => OrdersPage());
+                },
+                child: const Card(
+                  child: Center(
+                    child: Text('Go To Orders'),
                   ),
                 ),
               ),

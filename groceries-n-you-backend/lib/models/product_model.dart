@@ -100,7 +100,8 @@ class ProductModel extends Equatable {
       id: 1,
       name: 'Amstel Premium Pilsener - 0,5 Л кен',
       manu: 'Amstel',
-      picture: 'assets/products/beers/Amstel_Can.png',
+      picture:
+          'https://firebasestorage.googleapis.com/v0/b/groceries-n-you.appspot.com/o/product_images%2FAmstel_Can.png?alt=media&token=8086186f-6ac0-4c68-bf9a-18bf7c095179',
       price: 1.28,
       isOnSale: true,
       saleAmount: 33,
@@ -110,7 +111,8 @@ class ProductModel extends Equatable {
       id: 2,
       name: 'Amstel Premium Pilsener - 0,5 Л стъкло',
       manu: 'Amstel',
-      picture: 'assets/products/beers/Amstel_Glass.png',
+      picture:
+          'https://firebasestorage.googleapis.com/v0/b/groceries-n-you.appspot.com/o/product_images%2FAmstel_Glass.png?alt=media&token=733e4671-ebb8-4d85-a70f-f6b7a898d529',
       price: 1.4,
       isOnSale: false,
       saleAmount: 0,
@@ -120,7 +122,8 @@ class ProductModel extends Equatable {
       id: 3,
       name: 'Ариана светло пиво - 0,5Л кен',
       manu: 'Ariana',
-      picture: 'assets/products/beers/Ariana_Can.png',
+      picture:
+          'https://firebasestorage.googleapis.com/v0/b/groceries-n-you.appspot.com/o/product_images%2FAriana_Can.png?alt=media&token=a0e573c1-90cb-4c96-a847-86bcdb5e20ea',
       price: 0.9,
       isOnSale: false,
       saleAmount: 0,
@@ -130,7 +133,8 @@ class ProductModel extends Equatable {
       id: 4,
       name: 'Ариана светло пиво - 0,5Л стъкло',
       manu: 'Ariana',
-      picture: 'assets/products/beers/Ariana_Glass.png',
+      picture:
+          'https://firebasestorage.googleapis.com/v0/b/groceries-n-you.appspot.com/o/product_images%2FAriana_Glass.png?alt=media&token=b7ce94db-75de-4764-b3b0-62aa3cd3c3de',
       price: 1.08,
       isOnSale: true,
       saleAmount: 20,
@@ -140,7 +144,8 @@ class ProductModel extends Equatable {
       id: 5,
       name: 'Heineken светло пиво - 0,5Л кен',
       manu: 'Heineken',
-      picture: 'assets/products/beers/Heineken_Can.png',
+      picture:
+          'https://firebasestorage.googleapis.com/v0/b/groceries-n-you.appspot.com/o/product_images%2FHeineken_Can.png?alt=media&token=bc97d555-3762-457c-ad7d-4b71309192af',
       price: 0.89,
       isOnSale: false,
       saleAmount: 0,

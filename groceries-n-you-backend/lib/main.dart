@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gny_backend/screens/new_product_page.dart';
+import 'package:gny_backend/screens/orders_page.dart';
 import 'package:gny_backend/screens/products_page.dart';
 import 'package:material_color_generator/material_color_generator.dart';
 
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
       getPages: [
         GetPage(name: '/allProducts', page: () => ProductsPage()),
         GetPage(name: '/allProducts/new', page: () => NewProductPage()),
+        GetPage(name: '/orders', page: () => OrdersPage()),
       ],
       home: const HomeScreen(),
     );
