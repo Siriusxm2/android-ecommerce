@@ -5,7 +5,6 @@ import '../blocs/blocs.dart';
 import '../constants/prices.dart';
 import '../myWidgets/widgets.dart';
 import '../../constants/routes.dart';
-import 'cart_product_widget.dart';
 import '../dimensions.dart';
 
 class CartFullPage extends StatefulWidget {
@@ -78,7 +77,7 @@ class _CartFullPageState extends State<CartFullPage> {
                             .keys
                             .length,
                         itemBuilder: (context, index) {
-                          return CartProduct(
+                          return MyCartProductWidget(
                             product: state.cart
                                 .productQuantity(state.cart.products)
                                 .keys

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:groceries_n_you/constants/routes.dart';
 import 'package:groceries_n_you/services/auth/auth_service.dart';
 import 'package:groceries_n_you/services/crud/orders_service.dart';
 
@@ -6,6 +7,13 @@ import '../../../myWidgets/widgets.dart';
 
 class ProfileOrdersPage extends StatefulWidget {
   const ProfileOrdersPage({Key? key}) : super(key: key);
+
+  static Route route() {
+    return MaterialPageRoute(
+      settings: const RouteSettings(name: profileOrdersRoute),
+      builder: (context) => const ProfileOrdersPage(),
+    );
+  }
 
   @override
   State<ProfileOrdersPage> createState() => _ProfileOrdersPageState();

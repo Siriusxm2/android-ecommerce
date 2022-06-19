@@ -9,10 +9,21 @@ import '../myWidgets/widgets.dart';
 class VerifyEmail extends StatelessWidget {
   const VerifyEmail({Key? key}) : super(key: key);
 
+  static Route route() {
+    return MaterialPageRoute(
+      settings: const RouteSettings(name: verifyRoute),
+      builder: (context) => const VerifyEmail(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MyAppBarHeader(label: 'Verify email'),
+      drawer: const MyDrawer(),
+      floatingActionButton: const MyFloatingButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      bottomNavigationBar: const MyBottomNavbar(),
       body: Center(
         child: Column(
           children: [
@@ -83,10 +94,6 @@ class VerifyEmail extends StatelessWidget {
           ],
         ),
       ),
-      drawer: const MyDrawer(),
-      floatingActionButton: const MyFloatingButton(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      bottomNavigationBar: const MyBottomNavbar(),
     );
   }
 }

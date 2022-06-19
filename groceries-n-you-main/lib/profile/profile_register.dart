@@ -3,6 +3,8 @@ import 'package:groceries_n_you/custom_widget_functions.dart';
 import 'package:groceries_n_you/dimensions.dart';
 import 'package:groceries_n_you/constants/routes.dart';
 import 'package:groceries_n_you/customIcons/custom_icons_icons.dart';
+import 'package:groceries_n_you/models/user_model.dart';
+import 'package:groceries_n_you/repositories/user/user_repo.dart';
 import 'package:groceries_n_you/services/auth/auth_exceptions.dart';
 import 'package:groceries_n_you/services/auth/auth_service.dart';
 import 'package:groceries_n_you/services/crud/orders_service.dart';
@@ -12,6 +14,13 @@ import '../myWidgets/widgets.dart';
 
 class ProfileRegister extends StatefulWidget {
   const ProfileRegister({Key? key}) : super(key: key);
+
+  static Route route() {
+    return MaterialPageRoute(
+      settings: const RouteSettings(name: registerRoute),
+      builder: (context) => const ProfileRegister(),
+    );
+  }
 
   @override
   State<ProfileRegister> createState() => _ProfileRegisterPageState();
@@ -25,6 +34,8 @@ class _ProfileRegisterPageState extends State<ProfileRegister> {
   late final TextEditingController _phone;
   late final OrdersService _ordersService;
   bool _obscurePassword = true;
+
+  final UserRepository userRepository = UserRepository();
 
   // bool _obscurePassword2 = true;
 
@@ -243,6 +254,16 @@ class _ProfileRegisterPageState extends State<ProfileRegister> {
                         name: name,
                         email: email,
                         password: password,
+                      );
+                      final user = AuthService.firebase().currentUser;
+                      await userRepository.createUser(
+                        UserModel(
+                          id: user!.id,
+                          name: name,
+                          email: email,
+                          address: address,
+                          phone: phone,
+                        ),
                       );
                       await _ordersService.createUser(
                         name: name,

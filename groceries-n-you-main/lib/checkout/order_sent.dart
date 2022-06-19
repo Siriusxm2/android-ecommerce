@@ -7,6 +7,13 @@ import '../myWidgets/widgets.dart';
 class OrderSentPage extends StatelessWidget {
   const OrderSentPage({Key? key}) : super(key: key);
 
+  static Route route() {
+    return MaterialPageRoute(
+      settings: const RouteSettings(name: orderSuccessRoute),
+      builder: (context) => const OrderSentPage(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

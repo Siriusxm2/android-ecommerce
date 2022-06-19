@@ -5,11 +5,11 @@ import '../blocs/blocs.dart';
 import '../dimensions.dart';
 import '../models/product_model.dart';
 
-class CartProduct extends StatelessWidget {
+class MyCartProductWidget extends StatelessWidget {
   final ProductModel product;
   final int quantity;
 
-  const CartProduct({
+  const MyCartProductWidget({
     Key? key,
     required this.product,
     required this.quantity,
@@ -34,7 +34,7 @@ class CartProduct extends StatelessWidget {
                 ),
                 width: Dimensions.width80 + Dimensions.width12,
                 height: Dimensions.height70,
-                child: Image.asset(
+                child: Image.network(
                   product.picture,
                   fit: BoxFit.fill,
                 ),

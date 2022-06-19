@@ -9,6 +9,13 @@ import '../myWidgets/widgets.dart';
 class FinalizePage extends StatelessWidget {
   const FinalizePage({Key? key}) : super(key: key);
 
+  static Route route() {
+    return MaterialPageRoute(
+      settings: const RouteSettings(name: finalizeRoute),
+      builder: (context) => const FinalizePage(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,12 +59,21 @@ class FinalizePage extends StatelessWidget {
                               _customRow(context, 'Email:', state.email!),
                               _customRow(context, 'Address:', state.address!),
                               _customRow(context, 'Phone:', state.phone!),
-                              _customRow(context, 'Delivery Date:',
-                                  state.deliveryDate!),
-                              _customRow(context, 'Delivery Hour:',
-                                  state.deliveryTime!),
-                              _customRow(context, 'Payment Method:',
-                                  state.paymentMethod!),
+                              _customRow(
+                                context,
+                                'Delivery Date:',
+                                state.deliveryDate!,
+                              ),
+                              _customRow(
+                                context,
+                                'Delivery Hour:',
+                                state.deliveryTime!,
+                              ),
+                              _customRow(
+                                context,
+                                'Payment Method:',
+                                state.paymentMethod.toString(),
+                              ),
                             ],
                           );
                         } else {
@@ -136,7 +152,11 @@ class FinalizePage extends StatelessWidget {
                             bottom: Dimensions.height20,
                           ),
                           child: ElevatedButton(
-                            onPressed: () {
+                            onPressed: () async {
+                              await GooglePay(
+                                products: state.products!,
+                                total: state.total!,
+                              );
                               Navigator.of(context).pushNamedAndRemoveUntil(
                                 orderSuccessRoute,
                                 (route) => false,

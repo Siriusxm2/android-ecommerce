@@ -18,6 +18,8 @@ class NewProductPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<String> categories = ['Beer', 'Soft drinks'];
+
     return Scaffold(
       appBar: AppBar(title: const Text('Add Product')),
       body: Padding(
@@ -97,11 +99,6 @@ class NewProductPage extends StatelessWidget {
                   ),
                 ),
                 _customTextFormField(
-                  'ID',
-                  'id',
-                  productController,
-                ),
-                _customTextFormField(
                   'Product Name',
                   'name',
                   productController,
@@ -110,6 +107,24 @@ class NewProductPage extends StatelessWidget {
                   'Product Manufacturer',
                   'manu',
                   productController,
+                ),
+                DropdownButtonFormField(
+                  decoration: const InputDecoration(
+                    hintText: 'Product Category',
+                  ),
+                  items: categories.map((category) {
+                    return DropdownMenuItem(
+                      value: category,
+                      child: Text(category),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    productController.newProduct.update(
+                      'product_category',
+                      (_) => value,
+                      ifAbsent: () => value,
+                    );
+                  },
                 ),
                 _customTextFormField(
                   'Product Price',
@@ -159,19 +174,23 @@ class NewProductPage extends StatelessWidget {
                   onPressed: () {
                     database.addProduct(
                       ProductModel(
-                        id: int.parse(productController.newProduct['id']),
+                        id: productController.newProduct['id'],
                         name: productController.newProduct['name'],
                         manu: productController.newProduct['manu'],
+                        category:
+                            productController.newProduct['product_category'],
                         picture: productController.newProduct['product_image'],
                         price: double.parse(
                             productController.newProduct['product_price']),
-                        isOnSale: productController.newProduct['is_sale'],
+                        isOnSale:
+                            productController.newProduct['is_sale'] ?? false,
                         saleAmount: int.parse(
                             productController.newProduct['sale_amount']),
                         inStorage: int.parse(
                             productController.newProduct['in_storage']),
                       ),
                     );
+                    Navigator.pop(context);
                   },
                   style: ElevatedButton.styleFrom(
                     primary: const Color(0xff8EB4FF),

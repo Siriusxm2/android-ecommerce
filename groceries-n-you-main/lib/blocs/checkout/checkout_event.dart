@@ -14,7 +14,7 @@ class UpdateCheckout extends CheckoutEvent {
   final String? phone;
   final String? deliveryDate;
   final String? deliveryTime;
-  final String? paymentMethod;
+  final PaymentMethodModel? paymentMethod;
   final CartModel? cart;
 
   const UpdateCheckout({

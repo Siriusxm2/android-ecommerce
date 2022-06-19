@@ -20,7 +20,7 @@ class CheckoutLoaded extends CheckoutState {
   final List<ProductModel>? products;
   final String? deliveryDate;
   final String? deliveryTime;
-  final String? paymentMethod;
+  final PaymentMethodModel? paymentMethod;
   final num? subtotal;
   final num? deliveryFee;
   final num? voucher;

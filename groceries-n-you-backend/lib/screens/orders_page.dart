@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:gny_backend/controllers/product_controller.dart';
 import 'package:intl/intl.dart';
 
 import 'package:gny_backend/controllers/order_controller.dart';
 import 'package:gny_backend/dimensions.dart';
 import 'package:gny_backend/models/order_model.dart';
-import 'package:gny_backend/models/product_model.dart';
 
 class OrdersPage extends StatelessWidget {
   final OrderController orderController = Get.put(OrderController());
+  final ProductController productController = Get.put(ProductController());
+
   OrdersPage({Key? key}) : super(key: key);
 
   @override
@@ -38,6 +40,7 @@ class OrdersPage extends StatelessWidget {
 class OrderCard extends StatelessWidget {
   final OrderModel order;
   final OrderController orderController = Get.find();
+  final ProductController productController = Get.find();
 
   OrderCard({
     Key? key,
@@ -46,7 +49,7 @@ class OrderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var products = ProductModel.products
+    var products = productController.products
         .where((product) => order.productsId.contains(product.id))
         .toList();
 
@@ -58,6 +61,13 @@ class OrderCard extends StatelessWidget {
       ),
       child: Card(
         margin: EdgeInsets.zero,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(Dimensions.border10),
+          side: const BorderSide(
+            width: 2,
+            color: Color(0xff4382FF),
+          ),
+        ),
         child: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: Dimensions.width10,

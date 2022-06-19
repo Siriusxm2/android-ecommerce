@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:groceries_n_you/constants/routes.dart';
-import 'package:groceries_n_you/myWidgets/my_header.dart';
 import 'package:groceries_n_you/services/auth/auth_service.dart';
 
 import '../../utils/dialogs/log_out_dialog.dart';
@@ -26,7 +25,6 @@ class _ProfileViewLoggedState extends State<ProfileViewLogged> {
     return Center(
       child: Column(
         children: [
-          const MyHeaderWidget(text: 'Profile'),
           Text((displayName != null) ? 'Welcome $displayName' : 'Welcome User'),
           ElevatedButton(
             onPressed: () {},

@@ -99,6 +99,13 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       margin: const EdgeInsets.only(top: 10),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(Dimensions.border10),
+        side: const BorderSide(
+          width: 2,
+          color: Color(0xff4382FF),
+        ),
+      ),
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: Column(

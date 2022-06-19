@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:groceries_n_you/blocs/payment/payment_bloc.dart';
+import 'package:groceries_n_you/models/payment_method_model.dart';
 
 import '../../models/cart_model.dart';
 import '../../models/checkout_model.dart';
@@ -14,14 +16,18 @@ part 'checkout_state.dart';
 
 class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
   final CartBloc _cartBloc;
+  final PaymentBloc _paymentBloc;
   final CheckoutRepository _checkoutRepository;
   StreamSubscription? _cartSubscription;
+  StreamSubscription? _paymentSubscription;
   StreamSubscription? _checkoutSubscription;
 
   CheckoutBloc({
     required CartBloc cartBloc,
+    required PaymentBloc paymentBloc,
     required CheckoutRepository checkoutRepository,
   })  : _checkoutRepository = checkoutRepository,
+        _paymentBloc = paymentBloc,
         _cartBloc = cartBloc,
         super(
           cartBloc.state is CartLoaded
@@ -39,6 +45,12 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
 
     _cartSubscription = cartBloc.stream.listen((state) {
       if (state is CartLoaded) add(UpdateCheckout(cart: state.cart));
+    });
+
+    _paymentSubscription = paymentBloc.stream.listen((state) {
+      if (state is PaymentLoaded) {
+        add(UpdateCheckout(paymentMethod: state.paymentMethodModel));
+      }
     });
   }
 
@@ -80,5 +92,12 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
         emit(CheckoutLoading());
       } catch (_) {}
     }
+  }
+
+  @override
+  Future<void> close() {
+    _cartSubscription?.cancel();
+    _paymentSubscription?.cancel();
+    return super.close();
   }
 }

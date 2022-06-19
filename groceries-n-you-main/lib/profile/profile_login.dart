@@ -12,6 +12,13 @@ import '../myWidgets/widgets.dart';
 class ProfileLogin extends StatefulWidget {
   const ProfileLogin({Key? key}) : super(key: key);
 
+  static Route route() {
+    return MaterialPageRoute(
+      settings: const RouteSettings(name: loginRoute),
+      builder: (context) => const ProfileLogin(),
+    );
+  }
+
   @override
   State<ProfileLogin> createState() => _ProfilePageState();
 }
@@ -39,6 +46,10 @@ class _ProfilePageState extends State<ProfileLogin> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MyAppBarHeader(label: 'Log in to your account'),
+      drawer: const MyDrawer(),
+      floatingActionButton: const MyFloatingButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      bottomNavigationBar: const MyBottomNavbar(),
       body: Center(
         child: Column(
           children: [
@@ -353,10 +364,6 @@ class _ProfilePageState extends State<ProfileLogin> {
           ],
         ),
       ),
-      drawer: const MyDrawer(),
-      floatingActionButton: const MyFloatingButton(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      bottomNavigationBar: const MyBottomNavbar(),
     );
   }
 }

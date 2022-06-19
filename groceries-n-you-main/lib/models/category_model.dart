@@ -16,10 +16,11 @@ class CategoryModel extends Equatable {
         image,
       ];
 
-  static CategoryModel fromSnapshot(DocumentSnapshot snap) {
-    CategoryModel category =
-        CategoryModel(name: snap['name'], image: snap['image']);
-    return category;
+  factory CategoryModel.fromSnapshot(DocumentSnapshot snap) {
+    return CategoryModel(
+      name: snap['name'],
+      image: snap['category_image'],
+    );
   }
 
   static List<CategoryModel> categories = [];

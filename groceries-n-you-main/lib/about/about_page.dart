@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:groceries_n_you/constants/routes.dart';
 import 'package:groceries_n_you/dimensions.dart';
 
 import '../myWidgets/widgets.dart';
 
 class AboutUsPage extends StatelessWidget {
   const AboutUsPage({Key? key}) : super(key: key);
+
+  static Route route() {
+    return MaterialPageRoute(
+      settings: const RouteSettings(name: aboutRoute),
+      builder: (context) => const AboutUsPage(),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -11,3 +11,5 @@ export 'my_list_tile.dart';
 export 'my_product.dart';
 export 'my_order_summary.dart';
 export 'my_popup_product.dart';
+export 'google_pay.dart';
+export 'my_cart_product.dart';

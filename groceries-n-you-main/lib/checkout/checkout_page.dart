@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:groceries_n_you/constants/order_info.dart';
 import 'package:groceries_n_you/dimensions.dart';
+import 'package:groceries_n_you/models/payment_method_model.dart';
 import 'package:intl/intl.dart';
+import 'package:pay/pay.dart';
 import 'dart:math' as math;
 
 import '../blocs/blocs.dart';
+import '../blocs/payment/payment_bloc.dart';
 import '../constants/routes.dart';
 import '../myWidgets/widgets.dart';
 import 'delivery_hours.dart';
@@ -14,6 +17,13 @@ enum RadioValues { cash, card }
 
 class CheckoutPage extends StatefulWidget {
   const CheckoutPage({Key? key}) : super(key: key);
+
+  static Route route() {
+    return MaterialPageRoute(
+      settings: const RouteSettings(name: checkoutRoute),
+      builder: (context) => const CheckoutPage(),
+    );
+  }
 
   @override
   State<CheckoutPage> createState() => _CheckoutPageState();
@@ -52,6 +62,10 @@ class _CheckoutPageState extends State<CheckoutPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MyAppBarHeader(label: 'Checkout'),
+      drawer: const MyDrawer(),
+      floatingActionButton: const MyFloatingButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      bottomNavigationBar: const MyBottomNavbar(),
       body: Column(
         children: [
           BlocBuilder<CheckoutBloc, CheckoutState>(
@@ -256,6 +270,122 @@ class _CheckoutPageState extends State<CheckoutPage> {
                           // Payment method
                           Padding(
                             padding: EdgeInsets.symmetric(
+                                horizontal: Dimensions.width20),
+                            child: ElevatedButton(
+                              onPressed: () {
+                                showModalBottomSheet(
+                                  context: context,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(Dimensions.border10),
+                                  )),
+                                  builder: (context) {
+                                    return BlocBuilder<PaymentBloc,
+                                        PaymentState>(
+                                      builder: (context, state) {
+                                        if (state is PaymentLoading) {
+                                          return const Center(
+                                            child: CircularProgressIndicator(),
+                                          );
+                                        }
+                                        if (state is PaymentLoaded) {
+                                          return Padding(
+                                            padding: EdgeInsets.only(
+                                              top: Dimensions.height10,
+                                              left: Dimensions.width10,
+                                              right: Dimensions.width10,
+                                            ),
+                                            child: Column(
+                                              children: [
+                                                SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width -
+                                                      Dimensions.width20,
+                                                  child: ElevatedButton(
+                                                    onPressed: () {
+                                                      context
+                                                          .read<PaymentBloc>()
+                                                          .add(
+                                                            const SelectPaymentMethod(
+                                                                paymentMethodModel:
+                                                                    PaymentMethodModel
+                                                                        .cash),
+                                                          );
+
+                                                      Navigator.pop(context);
+                                                    },
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      primary: const Color(
+                                                          0xff8EB4FF),
+                                                    ),
+                                                    child: Center(
+                                                      child: Stack(
+                                                        children: [
+                                                          Positioned(
+                                                            top: -(Dimensions
+                                                                .height5),
+                                                            left: 0,
+                                                            child: Image.asset(
+                                                                'assets/cash_pay.png'),
+                                                          ),
+                                                          const Align(
+                                                            child: Text('Cash'),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                RawGooglePayButton(
+                                                  style:
+                                                      GooglePayButtonStyle.flat,
+                                                  type: GooglePayButtonType.pay,
+                                                  onPressed: () {
+                                                    context
+                                                        .read<PaymentBloc>()
+                                                        .add(
+                                                          const SelectPaymentMethod(
+                                                              paymentMethodModel:
+                                                                  PaymentMethodModel
+                                                                      .googlePay),
+                                                        );
+
+                                                    Navigator.pop(context);
+                                                  },
+                                                )
+                                              ],
+                                            ),
+                                          );
+                                        } else {
+                                          return const Text(
+                                              'Something went wrong!');
+                                        }
+                                      },
+                                    );
+                                  },
+                                );
+                              },
+                              child: const Center(
+                                child: Text(
+                                  'Select Payment',
+                                  style: TextStyle(
+                                    color: Color(0xff333333),
+                                  ),
+                                ),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                padding: EdgeInsets.zero,
+                                primary: const Color(0xff8EB4FF),
+                                side: const BorderSide(
+                                  color: Color(0xffFFAE2D),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
                               horizontal: Dimensions.width20,
                               vertical: Dimensions.height20,
                             ),
@@ -344,9 +474,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                 context.read<CheckoutBloc>().add(
                                       UpdateCheckout(
                                         deliveryDate: _dateController.text,
-                                        paymentMethod: _char == RadioValues.cash
-                                            ? 'Cash'
-                                            : 'Card',
                                       ),
                                     );
                                 Navigator.of(context).pushNamedAndRemoveUntil(
@@ -399,10 +526,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
           ),
         ],
       ),
-      drawer: const MyDrawer(),
-      floatingActionButton: const MyFloatingButton(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      bottomNavigationBar: const MyBottomNavbar(),
     );
   }
 }

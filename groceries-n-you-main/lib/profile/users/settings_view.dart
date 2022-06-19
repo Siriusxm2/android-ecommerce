@@ -9,6 +9,13 @@ import '../../services/crud/orders_service.dart';
 class ProfileSettingsView extends StatefulWidget {
   const ProfileSettingsView({Key? key}) : super(key: key);
 
+  static Route route() {
+    return MaterialPageRoute(
+      settings: const RouteSettings(name: profileSettingsRoute),
+      builder: (context) => const ProfileSettingsView(),
+    );
+  }
+
   @override
   State<ProfileSettingsView> createState() => _ProfileSettingsViewState();
 }
@@ -27,6 +34,10 @@ class _ProfileSettingsViewState extends State<ProfileSettingsView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MyAppBarHeader(label: 'Settings'),
+      drawer: const MyDrawer(),
+      floatingActionButton: const MyFloatingButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      bottomNavigationBar: const MyBottomNavbar(),
       body: Center(
         child: Column(
           children: [
@@ -58,10 +69,6 @@ class _ProfileSettingsViewState extends State<ProfileSettingsView> {
           ],
         ),
       ),
-      drawer: const MyDrawer(),
-      floatingActionButton: const MyFloatingButton(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      bottomNavigationBar: const MyBottomNavbar(),
     );
   }
 }

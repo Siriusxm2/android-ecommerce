@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:groceries_n_you/models/payment_method_model.dart';
 
 import 'product_model.dart';
 
@@ -10,7 +11,7 @@ class CheckoutModel extends Equatable {
   final List<ProductModel>? products;
   final String? deliveryDate;
   final String? deliveryTime;
-  final String? paymentMethod;
+  final PaymentMethodModel? paymentMethod;
   final num? subtotal;
   final num? deliveryFee;
   final num? voucher;
@@ -56,7 +57,7 @@ class CheckoutModel extends Equatable {
     customerInfo['address'] = address;
     customerInfo['phone'] = phone;
 
-    orderInfo['payment_method'] = paymentMethod;
+    orderInfo['payment_method'] = paymentMethod.toString();
     orderInfo['delivery_date'] = deliveryDate;
     orderInfo['delivery_time'] = deliveryTime;
 
