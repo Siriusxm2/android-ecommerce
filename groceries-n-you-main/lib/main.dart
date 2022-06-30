@@ -40,9 +40,12 @@ class MyApp extends StatelessWidget {
         ],
         child: MultiBlocProvider(
           providers: [
-            BlocProvider(create: (_) => CartBloc()..add(LoadCart())),
             BlocProvider(
-                create: (_) => PaymentBloc()..add(LoadPaymentMethod())),
+              create: (_) => CartBloc()..add(LoadCart()),
+            ),
+            BlocProvider(
+              create: (_) => PaymentBloc()..add(LoadPaymentMethod()),
+            ),
             BlocProvider(
               create: (context) => AuthBloc(
                 authRepository: context.read<AuthRepository>(),

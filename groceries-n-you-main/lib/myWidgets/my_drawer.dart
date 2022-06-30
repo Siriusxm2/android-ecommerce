@@ -26,21 +26,22 @@ class _MyDrawerState extends State<MyDrawer> {
             );
           }
           if (state is CategoryLoaded) {
-            return ListView(
-              padding: EdgeInsets.zero,
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
-                  height: Dimensions.height140,
                   decoration: const BoxDecoration(
                     boxShadow: [
                       BoxShadow(
                         color: Color(0xffFFAE2D),
-                        //offset: Offset(0, 0.2),
+                        //offset: Offset(0, 8),
                       )
                     ],
                   ),
+                  height: Dimensions.height140,
                   child: DrawerHeader(
-                    padding: const EdgeInsets.fromLTRB(0, 16, 0, 16),
+                    padding:
+                        EdgeInsets.symmetric(vertical: Dimensions.height16),
                     child: Row(
                       children: [
                         Container(
@@ -72,64 +73,41 @@ class _MyDrawerState extends State<MyDrawer> {
                     ),
                   ),
                 ),
-                MyListTileMain(
-                  'assets/categoryMeat.png',
-                  'MEEEATS',
-                  () {},
-                ),
-                MyListTileMain(
-                  'assets/categoryMeat.png',
-                  'MEEEATS',
-                  () {},
-                ),
-                MyListTileMain(
-                  'assets/categoryMeat.png',
-                  'MEEEATS',
-                  () {},
-                ),
-                MyListTileMain(
-                  'assets/categoryMeat.png',
-                  'MEEEATS',
-                  () {},
-                ),
-                MyListTileMain(
-                  'assets/categoryMeat.png',
-                  'MEEEATS',
-                  () {},
-                ),
-                // ExpansionTile
-                MyListTileExpand(
-                  children: [
-                    MyListTileSub(
-                      'View all',
-                      () {},
-                      const SizedBox(),
-                    ),
-                    MyListTileSub(
-                      'Highly alcoholic',
-                      () {},
-                      const SizedBox(),
-                    ),
-                    MyListTileSub(
-                      'Wine',
-                      () {},
-                      const SizedBox(),
-                    ),
-                    MyListTileSub(
-                      'Beer',
-                      () {
-                        Navigator.of(context).pushNamedAndRemoveUntil(
-                          categoryRoute,
-                          (route) => true,
-                        );
-                      },
-                      const SizedBox(),
-                    ),
-                  ],
-                  imageAsset: Image.asset('assets/categoryAlcohol.png'),
-                  bgColor: const Color(0xff699BFF),
-                  borderColor: const Color(0xffB4CDFF),
-                  text: 'Alcohol',
+                SizedBox(
+                  height:
+                      MediaQuery.of(context).size.height - Dimensions.height140,
+                  child: ListView.builder(
+                    itemCount: state.categories.length,
+                    itemBuilder: (context, index) {
+                      return MyListTileExpand(
+                        children: [
+                          ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount:
+                                state.categories[index].subcategories.length,
+                            itemBuilder: (context2, index2) {
+                              return MyListTileSub(
+                                state.categories[index].subcategories[index2],
+                                () {
+                                  Navigator.of(context).pushNamedAndRemoveUntil(
+                                    categoryRoute,
+                                    (route) => true,
+                                    arguments: state.categories[index],
+                                  );
+                                },
+                                const SizedBox(),
+                              );
+                            },
+                          ),
+                        ],
+                        imageAsset: state.categories[index].image,
+                        bgColor: const Color(0xff699BFF),
+                        borderColor: const Color(0xffB4CDFF),
+                        text: state.categories[index].name,
+                      );
+                    },
+                  ),
                 ),
               ],
             );

@@ -10,19 +10,19 @@ import '../models/product_model.dart';
 import '../myWidgets/widgets.dart';
 
 class CategoryPage extends StatefulWidget {
-  const CategoryPage({
-    Key? key,
-    required this.category,
-  }) : super(key: key);
-
-  final CategoryModel category;
-
   static Route route({required CategoryModel category}) {
     return MaterialPageRoute(
       settings: const RouteSettings(name: categoryRoute),
       builder: (context) => CategoryPage(category: category),
     );
   }
+
+  final CategoryModel category;
+
+  const CategoryPage({
+    Key? key,
+    required this.category,
+  }) : super(key: key);
 
   @override
   State<CategoryPage> createState() => _CategoryPageState();
@@ -37,124 +37,123 @@ class _CategoryPageState extends State<CategoryPage> {
   void initState() {
     _gridState = true;
     _listState = false;
+    category = widget.category;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBarHeader(label: 'Beer'),
+      appBar: MyAppBarHeader(label: category.name),
       drawer: const MyDrawer(),
       floatingActionButton: const MyFloatingButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       bottomNavigationBar: const MyBottomNavbar(),
-      body: Expanded(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Container(
-                  margin: EdgeInsets.fromLTRB(
-                    Dimensions.width20,
-                    Dimensions.height10,
-                    0,
-                    Dimensions.height10,
-                  ),
-                  child: Row(
-                    children: const [
-                      ProductTypeCarousel(text: 'Astika'),
-                      ProductTypeCarousel(text: 'Tuborg'),
-                      ProductTypeCarousel(text: 'Heineken'),
-                      ProductTypeCarousel(text: 'Ariana'),
-                      ProductTypeCarousel(text: 'Shumensko'),
-                      ProductTypeCarousel(text: 'Pirinsko'),
-                    ],
-                  ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Container(
+                margin: EdgeInsets.fromLTRB(
+                  Dimensions.width20,
+                  Dimensions.height10,
+                  0,
+                  Dimensions.height10,
+                ),
+                child: Row(
+                  children: const [
+                    ProductTypeCarousel(text: 'Astika'),
+                    ProductTypeCarousel(text: 'Tuborg'),
+                    ProductTypeCarousel(text: 'Heineken'),
+                    ProductTypeCarousel(text: 'Ariana'),
+                    ProductTypeCarousel(text: 'Shumensko'),
+                    ProductTypeCarousel(text: 'Pirinsko'),
+                  ],
                 ),
               ),
-              Divider(
-                thickness: 1,
-                indent: Dimensions.width10,
-                endIndent: Dimensions.width10,
-                color: const Color(0xffcccccc),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton(
-                    icon: Icon(
-                      CustomIcons.gridView,
-                      color: _gridState
-                          ? const Color(0xff333333)
-                          : const Color(0xffcccccc),
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _gridState = true;
-                        _listState = false;
-                      });
-                    },
+            ),
+            Divider(
+              thickness: 1,
+              indent: Dimensions.width10,
+              endIndent: Dimensions.width10,
+              color: const Color(0xffcccccc),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton(
+                  icon: Icon(
+                    CustomIcons.gridView,
+                    color: _gridState
+                        ? const Color(0xff333333)
+                        : const Color(0xffcccccc),
                   ),
-                  SizedBox(width: Dimensions.width50 / 2),
-                  IconButton(
-                    icon: Icon(
-                      CustomIcons.listView,
-                      color: _listState
-                          ? const Color(0xff333333)
-                          : const Color(0xffcccccc),
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _listState = true;
-                        _gridState = false;
-                      });
-                    },
+                  onPressed: () {
+                    setState(() {
+                      _gridState = true;
+                      _listState = false;
+                    });
+                  },
+                ),
+                SizedBox(width: Dimensions.width50 / 2),
+                IconButton(
+                  icon: Icon(
+                    CustomIcons.listView,
+                    color: _listState
+                        ? const Color(0xff333333)
+                        : const Color(0xffcccccc),
                   ),
-                ],
-              ),
-              const Divider(
-                thickness: 1,
-                color: Color(0xffcccccc),
-              ),
-              BlocBuilder<ProductBloc, ProductState>(
-                builder: (context, state) {
-                  if (state is ProductLoading) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                  if (state is ProductLoaded) {
-                    final List<ProductModel> categoryProducts = state.products
-                        .where((product) => product.category == category.name)
-                        .toList();
-                    return Container(
-                      margin: EdgeInsets.only(top: Dimensions.height10),
-                      //width: MediaQuery.of(context).size.width - Dimensions.width40,
-                      child: _gridState
-                          ? Wrap(
-                              alignment: WrapAlignment.center,
-                              children: _convertToView(
-                                categoryProducts,
-                                categoryProducts.length,
-                                _gridState,
-                              ),
-                            )
-                          : Column(
-                              children: _convertToView(
-                                categoryProducts,
-                                categoryProducts.length,
-                                _gridState,
-                              ),
+                  onPressed: () {
+                    setState(() {
+                      _listState = true;
+                      _gridState = false;
+                    });
+                  },
+                ),
+              ],
+            ),
+            const Divider(
+              thickness: 1,
+              color: Color(0xffcccccc),
+            ),
+            BlocBuilder<ProductBloc, ProductState>(
+              builder: (context, state) {
+                if (state is ProductLoading) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                if (state is ProductLoaded) {
+                  final List<ProductModel> categoryProducts = state.products
+                      .where((product) => product.category == category.name)
+                      .toList();
+                  return Container(
+                    margin: EdgeInsets.only(top: Dimensions.height10),
+                    //width: MediaQuery.of(context).size.width - Dimensions.width40,
+                    child: _gridState
+                        ? Wrap(
+                            alignment: WrapAlignment.center,
+                            children: _convertToView(
+                              categoryProducts,
+                              categoryProducts.length,
+                              _gridState,
                             ),
-                    );
-                  } else {
-                    return const Text('Something went wrong!');
-                  }
-                },
-              ),
-            ],
-          ),
+                          )
+                        : Column(
+                            children: _convertToView(
+                              categoryProducts,
+                              categoryProducts.length,
+                              _gridState,
+                            ),
+                          ),
+                  );
+                } else {
+                  return const Text('Something went wrong!');
+                }
+              },
+            ),
+          ],
         ),
       ),
     );

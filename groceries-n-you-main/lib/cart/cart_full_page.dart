@@ -72,6 +72,7 @@ class _CartFullPageState extends State<CartFullPage> {
                     child: LimitedBox(
                       maxHeight: Dimensions.height200 + Dimensions.height180,
                       child: ListView.builder(
+                        shrinkWrap: true,
                         itemCount: state.cart
                             .productQuantity(state.cart.products)
                             .keys

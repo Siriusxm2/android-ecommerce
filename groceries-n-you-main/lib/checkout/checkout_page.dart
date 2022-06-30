@@ -8,12 +8,9 @@ import 'package:pay/pay.dart';
 import 'dart:math' as math;
 
 import '../blocs/blocs.dart';
-import '../blocs/payment/payment_bloc.dart';
 import '../constants/routes.dart';
 import '../myWidgets/widgets.dart';
 import 'delivery_hours.dart';
-
-enum RadioValues { cash, card }
 
 class CheckoutPage extends StatefulWidget {
   const CheckoutPage({Key? key}) : super(key: key);
@@ -34,7 +31,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
   late DateTime selectedDate;
   late var deliveryHours = DeliveryHours().hours;
   late String chosenHour = DeliveryHours().hours[0];
-  RadioValues? _char = RadioValues.cash;
 
   _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -276,26 +272,28 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                 showModalBottomSheet(
                                   context: context,
                                   shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(Dimensions.border10),
-                                  )),
+                                    borderRadius: BorderRadius.vertical(
+                                      top: Radius.circular(Dimensions.border10),
+                                    ),
+                                  ),
                                   builder: (context) {
-                                    return BlocBuilder<PaymentBloc,
-                                        PaymentState>(
-                                      builder: (context, state) {
-                                        if (state is PaymentLoading) {
-                                          return const Center(
-                                            child: CircularProgressIndicator(),
-                                          );
-                                        }
-                                        if (state is PaymentLoaded) {
-                                          return Padding(
-                                            padding: EdgeInsets.only(
-                                              top: Dimensions.height10,
-                                              left: Dimensions.width10,
-                                              right: Dimensions.width10,
-                                            ),
-                                            child: Column(
+                                    return Padding(
+                                      padding: EdgeInsets.only(
+                                        top: Dimensions.height10,
+                                        left: Dimensions.width10,
+                                        right: Dimensions.width10,
+                                      ),
+                                      child: BlocBuilder<PaymentBloc,
+                                          PaymentState>(
+                                        builder: (context, state) {
+                                          if (state is PaymentLoading) {
+                                            return const Center(
+                                              child:
+                                                  CircularProgressIndicator(),
+                                            );
+                                          }
+                                          if (state is PaymentLoaded) {
+                                            return Column(
                                               children: [
                                                 SizedBox(
                                                   width: MediaQuery.of(context)
@@ -308,9 +306,10 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                                           .read<PaymentBloc>()
                                                           .add(
                                                             const SelectPaymentMethod(
-                                                                paymentMethodModel:
-                                                                    PaymentMethodModel
-                                                                        .cash),
+                                                              paymentMethodModel:
+                                                                  PaymentMethodModel
+                                                                      .cash,
+                                                            ),
                                                           );
 
                                                       Navigator.pop(context);
@@ -347,22 +346,24 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                                         .read<PaymentBloc>()
                                                         .add(
                                                           const SelectPaymentMethod(
-                                                              paymentMethodModel:
-                                                                  PaymentMethodModel
-                                                                      .googlePay),
+                                                            paymentMethodModel:
+                                                                PaymentMethodModel
+                                                                    .googlePay,
+                                                          ),
                                                         );
 
                                                     Navigator.pop(context);
                                                   },
-                                                )
+                                                ),
                                               ],
-                                            ),
-                                          );
-                                        } else {
-                                          return const Text(
-                                              'Something went wrong!');
-                                        }
-                                      },
+                                            );
+                                          } else {
+                                            return const Text(
+                                              'Something went wrong!',
+                                            );
+                                          }
+                                        },
+                                      ),
                                     );
                                   },
                                 );
@@ -384,77 +385,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: Dimensions.width20,
-                              vertical: Dimensions.height20,
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Payment method',
-                                  style: TextStyle(
-                                    fontSize: Dimensions.font14,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                Theme(
-                                  data: Theme.of(context).copyWith(
-                                    unselectedWidgetColor:
-                                        const Color(0xffFFCE81),
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      ListTile(
-                                        minLeadingWidth: 5,
-                                        contentPadding: EdgeInsets.only(
-                                            right: Dimensions.width15 +
-                                                Dimensions.width5 /
-                                                    Dimensions.width5),
-                                        title: const Text('Cash'),
-                                        leading:
-                                            Image.asset('assets/cash_pay.png'),
-                                        trailing: Radio(
-                                          activeColor: const Color(0xffFFBE57),
-                                          value: RadioValues.cash,
-                                          groupValue: _char,
-                                          onChanged: (RadioValues? value) {
-                                            setState(() {
-                                              _char = value;
-                                            });
-                                          },
-                                        ),
-                                      ),
-                                      ListTile(
-                                        minLeadingWidth: 5,
-                                        contentPadding: EdgeInsets.only(
-                                            right: Dimensions.width15 +
-                                                Dimensions.width5 /
-                                                    Dimensions.width5),
-                                        title: const Text('Card'),
-                                        leading: Transform.scale(
-                                          scale: 0.66,
-                                          child: Image.asset(
-                                              'assets/card_pay.png'),
-                                        ),
-                                        trailing: Radio(
-                                          activeColor: const Color(0xffFFBE57),
-                                          value: RadioValues.card,
-                                          groupValue: _char,
-                                          onChanged: (RadioValues? value) {
-                                            setState(() {
-                                              _char = value;
-                                            });
-                                          },
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
                           Divider(
                             thickness: 1,
                             color: const Color(0xffcccccc),
@@ -471,6 +401,10 @@ class _CheckoutPageState extends State<CheckoutPage> {
                             ),
                             child: ElevatedButton(
                               onPressed: () {
+                                GooglePay(
+                                  products: state.products!,
+                                  total: state.total!,
+                                );
                                 context.read<CheckoutBloc>().add(
                                       UpdateCheckout(
                                         deliveryDate: _dateController.text,

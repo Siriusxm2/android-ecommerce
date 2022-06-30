@@ -23,7 +23,17 @@ class MyListTileMain extends StatelessWidget {
       ),
       child: ListTile(
         onTap: onTap,
-        leading: Image.asset(image),
+        leading: Container(
+          width: Dimensions.width50 / 2,
+          height: Dimensions.height50 / 2,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            image: DecorationImage(
+              image: NetworkImage(image),
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
         minLeadingWidth: 0,
         title: Text(
           text,
@@ -123,7 +133,7 @@ class MyListTileSubSub extends StatelessWidget {
 class MyListTileExpand extends StatefulWidget {
   final Color bgColor;
   final Color borderColor;
-  Widget imageAsset;
+  String imageAsset;
   final String text;
   List<Widget> children;
 
@@ -143,7 +153,7 @@ class MyListTileExpand extends StatefulWidget {
 class _MyListTileExpandState extends State<MyListTileExpand> {
   late final Color _background;
   late final Color _border;
-  late Widget _image;
+  late String _image;
   late String _text;
   List<Widget> _childs = [];
   bool _isExpanded = false;
@@ -175,10 +185,20 @@ class _MyListTileExpandState extends State<MyListTileExpand> {
             _isExpanded = value;
           });
         },
-        leading: _image,
+        leading: Container(
+          width: Dimensions.width50 / 2,
+          height: Dimensions.height50 / 2,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            image: DecorationImage(
+              image: NetworkImage(_image),
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
         title: Container(
           alignment: Alignment.centerLeft,
-          margin: const EdgeInsets.only(right: 60),
+          margin: EdgeInsets.only(right: Dimensions.width60),
           child: Text(
             _text,
             style: TextStyle(

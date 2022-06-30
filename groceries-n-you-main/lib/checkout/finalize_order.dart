@@ -152,18 +152,14 @@ class FinalizePage extends StatelessWidget {
                             bottom: Dimensions.height20,
                           ),
                           child: ElevatedButton(
-                            onPressed: () async {
-                              await GooglePay(
-                                products: state.products!,
-                                total: state.total!,
-                              );
+                            onPressed: () {
+                              context.read<CheckoutBloc>().add(
+                                    ConfirmCheckout(checkout: state.checkout),
+                                  );
                               Navigator.of(context).pushNamedAndRemoveUntil(
                                 orderSuccessRoute,
                                 (route) => false,
                               );
-                              context.read<CheckoutBloc>().add(
-                                    ConfirmCheckout(checkout: state.checkout),
-                                  );
                             },
                             child: const Center(
                               child: Text(

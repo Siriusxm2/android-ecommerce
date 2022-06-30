@@ -17,7 +17,7 @@ class OrderSentPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MyAppBar(),
+      appBar: MyAppBar(),
       drawer: const MyDrawer(),
       floatingActionButton: const MyFloatingButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,

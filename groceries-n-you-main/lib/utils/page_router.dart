@@ -29,7 +29,8 @@ class PageRouter {
         return CartPage.route();
       case categoryRoute:
         return CategoryPage.route(
-            category: settings.arguments as CategoryModel);
+          category: settings.arguments as CategoryModel,
+        );
       case checkoutRoute:
         return CheckoutPage.route();
       case finalizeRoute:
