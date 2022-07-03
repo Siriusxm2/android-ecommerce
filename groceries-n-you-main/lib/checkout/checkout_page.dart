@@ -10,6 +10,7 @@ import 'dart:math' as math;
 import '../blocs/blocs.dart';
 import '../constants/routes.dart';
 import '../myWidgets/widgets.dart';
+import '../services/auth/auth_service.dart';
 import 'delivery_hours.dart';
 
 class CheckoutPage extends StatefulWidget {
@@ -31,6 +32,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
   late DateTime selectedDate;
   late var deliveryHours = DeliveryHours().hours;
   late String chosenHour = DeliveryHours().hours[0];
+  final user = AuthService.firebase().currentUser;
 
   _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -103,22 +105,24 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                 _customTextFormField(
                                   (value) {
                                     orderInfoName = value;
-                                    context
-                                        .read<CheckoutBloc>()
-                                        .add(UpdateCheckout(name: value));
+                                    context.read<CheckoutBloc>().add(
+                                          UpdateCheckout(name: value),
+                                        );
                                   },
                                   context,
                                   'Name',
+                                  (user != null) ? user!.displayName : null,
                                 ),
                                 _customTextFormField(
                                   (value) {
                                     orderInfoEmail = value;
-                                    context
-                                        .read<CheckoutBloc>()
-                                        .add(UpdateCheckout(email: value));
+                                    context.read<CheckoutBloc>().add(
+                                          UpdateCheckout(email: value),
+                                        );
                                   },
                                   context,
                                   'Email',
+                                  (user != null) ? user!.email : null,
                                 ),
                                 _customTextFormField(
                                   (value) {
@@ -129,6 +133,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                   },
                                   context,
                                   'Order Address',
+                                  null,
                                 ),
                                 _customTextFormField(
                                   (value) {
@@ -139,6 +144,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                   },
                                   context,
                                   'Phone',
+                                  null,
                                 ),
                               ],
                             ),
@@ -337,23 +343,47 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                                     ),
                                                   ),
                                                 ),
-                                                RawGooglePayButton(
-                                                  style:
-                                                      GooglePayButtonStyle.flat,
-                                                  type: GooglePayButtonType.pay,
-                                                  onPressed: () {
-                                                    context
-                                                        .read<PaymentBloc>()
-                                                        .add(
-                                                          const SelectPaymentMethod(
-                                                            paymentMethodModel:
-                                                                PaymentMethodModel
-                                                                    .googlePay,
-                                                          ),
-                                                        );
+                                                SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width -
+                                                      Dimensions.width20,
+                                                  child: ElevatedButton(
+                                                    onPressed: () {
+                                                      context
+                                                          .read<PaymentBloc>()
+                                                          .add(
+                                                            const SelectPaymentMethod(
+                                                              paymentMethodModel:
+                                                                  PaymentMethodModel
+                                                                      .creditCard,
+                                                            ),
+                                                          );
 
-                                                    Navigator.pop(context);
-                                                  },
+                                                      Navigator.pop(context);
+                                                    },
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      primary: const Color(
+                                                          0xff8EB4FF),
+                                                    ),
+                                                    child: Center(
+                                                      child: Stack(
+                                                        children: [
+                                                          Positioned(
+                                                            top: -(Dimensions
+                                                                .height5),
+                                                            left: 0,
+                                                            child: Image.asset(
+                                                                'assets/card_pay.png'),
+                                                          ),
+                                                          const Align(
+                                                            child: Text('Card'),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
                                                 ),
                                               ],
                                             );
@@ -401,12 +431,13 @@ class _CheckoutPageState extends State<CheckoutPage> {
                             ),
                             child: ElevatedButton(
                               onPressed: () {
-                                GooglePay(
-                                  products: state.products!,
-                                  total: state.total!,
-                                );
                                 context.read<CheckoutBloc>().add(
                                       UpdateCheckout(
+                                        name: (user != null)
+                                            ? user!.displayName
+                                            : null,
+                                        email:
+                                            (user != null) ? user!.email : null,
                                         deliveryDate: _dateController.text,
                                       ),
                                     );
@@ -473,6 +504,7 @@ Padding _customTextFormField(
   Function(String)? onChanged,
   BuildContext context,
   String label,
+  String? initialVal,
 ) {
   return Padding(
     padding: EdgeInsets.only(bottom: Dimensions.height5),
@@ -482,6 +514,7 @@ Padding _customTextFormField(
         children: [
           TextFormField(
             onChanged: onChanged,
+            initialValue: initialVal,
             decoration: InputDecoration(
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.all(

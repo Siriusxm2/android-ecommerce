@@ -1,20 +1,28 @@
+import 'dart:convert';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:groceries_n_you/constants/routes.dart';
+import 'package:groceries_n_you/custom_widget_functions.dart';
 import 'package:groceries_n_you/dimensions.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:groceries_n_you/models/models.dart';
+import 'package:http/http.dart' as http;
 
 import '../blocs/blocs.dart';
 import '../myWidgets/widgets.dart';
 
 class FinalizePage extends StatelessWidget {
-  const FinalizePage({Key? key}) : super(key: key);
+  FinalizePage({Key? key}) : super(key: key);
 
   static Route route() {
     return MaterialPageRoute(
       settings: const RouteSettings(name: finalizeRoute),
-      builder: (context) => const FinalizePage(),
+      builder: (context) => FinalizePage(),
     );
   }
+
+  Map<String, dynamic>? paymentIntentData;
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +80,9 @@ class FinalizePage extends StatelessWidget {
                               _customRow(
                                 context,
                                 'Payment Method:',
-                                state.paymentMethod.toString(),
+                                state.paymentMethod == PaymentMethodModel.cash
+                                    ? 'Cash'
+                                    : 'Debit Card',
                               ),
                             ],
                           );
@@ -152,14 +162,48 @@ class FinalizePage extends StatelessWidget {
                             bottom: Dimensions.height20,
                           ),
                           child: ElevatedButton(
-                            onPressed: () {
-                              context.read<CheckoutBloc>().add(
-                                    ConfirmCheckout(checkout: state.checkout),
+                            onPressed: () async {
+                              switch (state.paymentMethod) {
+                                case PaymentMethodModel.cash:
+                                  context.read<CheckoutBloc>().add(
+                                        ConfirmCheckout(
+                                            checkout: state.checkout),
+                                      );
+                                  Navigator.of(context).pushNamedAndRemoveUntil(
+                                    orderSuccessRoute,
+                                    (route) => false,
                                   );
-                              Navigator.of(context).pushNamedAndRemoveUntil(
-                                orderSuccessRoute,
-                                (route) => false,
-                              );
+                                  break;
+                                case PaymentMethodModel.creditCard:
+                                  await initPaymentSheet(
+                                    context,
+                                    email: state.email!,
+                                    address: state.address!,
+                                    phone: state.phone!,
+                                    name: state.name!,
+                                    amount: state.total!,
+                                  );
+                                  context.read<CheckoutBloc>().add(
+                                        ConfirmCheckout(
+                                            checkout: state.checkout),
+                                      );
+                                  Navigator.of(context).pushNamedAndRemoveUntil(
+                                    orderSuccessRoute,
+                                    (route) => false,
+                                  );
+                                  break;
+
+                                default:
+                                  context.read<CheckoutBloc>().add(
+                                        ConfirmCheckout(
+                                            checkout: state.checkout),
+                                      );
+                                  Navigator.of(context).pushNamedAndRemoveUntil(
+                                    orderSuccessRoute,
+                                    (route) => false,
+                                  );
+                                  break;
+                              }
                             },
                             child: const Center(
                               child: Text(
@@ -194,6 +238,60 @@ class FinalizePage extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       bottomNavigationBar: const MyBottomNavbar(),
     );
+  }
+
+  Future<void> initPaymentSheet(
+    context, {
+    required String email,
+    required String address,
+    required String phone,
+    required String name,
+    required num amount,
+  }) async {
+    try {
+      final response = await http.post(
+          Uri.parse(
+            'https://us-central1-groceries-n-you.cloudfunctions.net/stripePaymentIntentRequest',
+          ),
+          body: {
+            'email': email,
+            'address': address,
+            'phone': phone,
+            'name': name,
+            'amount': (amount * 100).toString(),
+          });
+
+      final jsonResponse = jsonDecode(response.body);
+      log(jsonResponse.toString());
+
+      await Stripe.instance.initPaymentSheet(
+        paymentSheetParameters: SetupPaymentSheetParameters(
+          paymentIntentClientSecret: jsonResponse['paymentIntent'],
+          merchantDisplayName: "Groceries 'N' You",
+          merchantCountryCode: 'BG',
+          customerId: jsonResponse['customer'],
+          customerEphemeralKeySecret: jsonResponse['ephemeralKey'],
+          style: ThemeMode.system,
+          testEnv: true,
+        ),
+      );
+
+      await Stripe.instance.presentPaymentSheet();
+
+      CustomWidgets.mySnackBarWidget(context, 'Payment Complete!');
+    } catch (e) {
+      if (e is StripeException) {
+        CustomWidgets.mySnackBarWidget(
+          context,
+          'Error from Stripe: ${e.error.localizedMessage}',
+        );
+      } else {
+        CustomWidgets.mySnackBarWidget(
+          context,
+          'Error from Stripe: $e',
+        );
+      }
+    }
   }
 }
 

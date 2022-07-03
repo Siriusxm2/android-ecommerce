@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:groceries_n_you/constants/routes.dart';
 import 'package:groceries_n_you/dimensions.dart';
 import 'package:groceries_n_you/myWidgets/my_header.dart';
+
+import 'widgets.dart';
 //import 'dart:developer' as devtools show log;
 
 class MyAppBarHeader extends StatelessWidget implements PreferredSizeWidget {
@@ -66,11 +68,7 @@ class MyAppBarHeader extends StatelessWidget implements PreferredSizeWidget {
           ),
           automaticallyImplyLeading: false,
           actions: [
-            IconButton(
-              iconSize: 30.0,
-              onPressed: () {},
-              icon: const Icon(Icons.search),
-            ),
+            const MySearchWidget(),
             IconButton(
               iconSize: 28.0,
               onPressed: () {
