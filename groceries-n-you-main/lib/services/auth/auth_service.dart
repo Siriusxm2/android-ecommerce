@@ -14,20 +14,13 @@ class AuthService implements AuthProvider {
   Future<void> initialize() => provider.initialize();
 
   @override
-  Future<AuthUser> createUser({required String name, required String email, required String password}) => provider.createUser(
-        name: name,
-        email: email,
-        password: password,
-      );
+  Future<AuthUser> createUser({required String name, required String email, required String password}) => provider.createUser(name: name, email: email, password: password);
 
   @override
   AuthUser? get currentUser => provider.currentUser;
 
   @override
-  Future<AuthUser> logIn({required String email, required String password}) => provider.logIn(
-        email: email,
-        password: password,
-      );
+  Future<AuthUser> logIn({required String email, required String password}) => provider.logIn(email: email, password: password);
 
   @override
   Future<void> logOut() => provider.logOut();
@@ -37,6 +30,9 @@ class AuthService implements AuthProvider {
 
   @override
   Future<void> sendEmailVerification() => provider.sendEmailVerification();
+
+  @override
+  Future<void> sendPasswordReset({required String toEmail}) => provider.sendPasswordReset(toEmail: toEmail);
 
   @override
   Future<UserCredential?> signInWithFacebook() => provider.signInWithFacebook();

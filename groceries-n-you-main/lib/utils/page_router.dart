@@ -12,6 +12,7 @@ import 'package:groceries_n_you/models/category_model.dart';
 import 'package:groceries_n_you/profile/profile.dart';
 import 'package:groceries_n_you/profile/profile_email_verify.dart';
 import 'package:groceries_n_you/profile/profile_login.dart';
+import 'package:groceries_n_you/profile/profile_password_reset.dart';
 import 'package:groceries_n_you/profile/profile_register.dart';
 import 'package:groceries_n_you/profile/users/orders/profile_orders.dart';
 import 'package:groceries_n_you/profile/users/settings_view.dart';
@@ -49,6 +50,8 @@ class PageRouter {
         return ProfileRegister.route();
       case verifyRoute:
         return VerifyEmail.route();
+      case resetPasswordRoute:
+        return ResetPassword.route();
       case aboutRoute:
         return AboutUsPage.route();
       case contactRoute:

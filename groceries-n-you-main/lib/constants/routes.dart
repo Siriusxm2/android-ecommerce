@@ -7,6 +7,7 @@ const profileOrdersRoute = '/orders';
 const loginRoute = '/login';
 const registerRoute = '/register';
 const verifyRoute = '/verify';
+const resetPasswordRoute = '/resetPassword';
 const aboutRoute = '/about';
 const contactRoute = '/contact';
 const categoryRoute = '/category';

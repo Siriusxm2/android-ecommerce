@@ -52,7 +52,7 @@ class _ProfilePageState extends State<ProfileLogin> {
       listener: (context, state) async {
         if (state is AuthStateLoggedOut) {
           if (state.exception is UserNotFoundAuthException) {
-            await showErrorDialog(context, 'No user found!');
+            await showErrorDialog(context, 'Could not find a user with the entered credentials!');
           } else if (state.exception is WrongPasswordAuthException) {
             await showErrorDialog(context, 'Wrong password!');
           } else if (state.exception is InvalidEmailAuthException) {
@@ -72,75 +72,85 @@ class _ProfilePageState extends State<ProfileLogin> {
           child: Column(
             children: [
               // Facebook Sign in
-              ElevatedButton.icon(
-                onPressed: () async {
-                  context.read<AuthBloc>().add(const AuthFacebookLogIn());
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => const UserAuthState()));
-                },
-                icon: Image.asset('assets/facebook_logo.png'),
-                label: Row(
-                  children: const [
-                    Text(
-                      'Sign in with Facebook',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Color(0xff333333),
-                      ),
-                    ),
-                  ],
-                ),
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(Dimensions.border10),
-                  ),
-                  primary: const Color(0xff4167B2),
-                  fixedSize: Size(Dimensions.width340, Dimensions.height30),
-                ),
-              ),
-              // Google Sign in
-              ElevatedButton(
-                onPressed: () async {
-                  context.read<AuthBloc>().add(const AuthGoogleLogIn());
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => const UserAuthState()));
-                },
-                child: Row(
-                  children: [
-                    Image.asset(
-                      'assets/google_icon.png',
-                      width: 16,
-                      height: 16,
-                    ),
-                    const Center(
-                      child: Text(
-                        'Sign in with Google',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Color(0xff333333),
+              SizedBox(
+                width: Dimensions.width340,
+                height: Dimensions.height30,
+                child: ElevatedButton(
+                  onPressed: () async {
+                    context.read<AuthBloc>().add(const AuthFacebookLogIn());
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const UserAuthState()));
+                  },
+                  child: Center(
+                    child: Stack(
+                      children: [
+                        Positioned(
+                          top: Dimensions.height2 * 2,
+                          left: 0,
+                          child: Image.asset('assets/facebook_logo.png'),
                         ),
-                      ),
+                        const Align(
+                          child: Text(
+                            'Sign in with Facebook',
+                            style: TextStyle(color: Color(0xffffffff)),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(Dimensions.border10),
                   ),
-                  primary: const Color(0xffEEEEEE),
-                  side: const BorderSide(
-                    color: Color(0xffD8D8D8),
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(Dimensions.border10),
+                    ),
+                    side: const BorderSide(color: Color(0xffD8D8D8)),
+                    primary: const Color(0xff4167B2),
                   ),
-                  fixedSize: Size(Dimensions.width340, Dimensions.height30),
                 ),
               ),
-              Container(
+              SizedBox(height: Dimensions.height10),
+              // Google Sign in
+              SizedBox(
+                width: Dimensions.width340,
+                height: Dimensions.height30,
+                child: ElevatedButton(
+                  onPressed: () async {
+                    context.read<AuthBloc>().add(const AuthGoogleLogIn());
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const UserAuthState()));
+                  },
+                  child: Center(
+                    child: Stack(
+                      children: [
+                        Positioned(
+                          top: Dimensions.height5 + Dimensions.height2,
+                          left: 0,
+                          child: Image.asset(
+                            'assets/google_icon.png',
+                            width: 16,
+                            height: 16,
+                          ),
+                        ),
+                        const Align(
+                          child: Text(
+                            'Sign in with Google',
+                            style: TextStyle(color: Color(0xff333333)),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(Dimensions.border10),
+                    ),
+                    primary: const Color(0xffEEEEEE),
+                    side: const BorderSide(color: Color(0xffD8D8D8)),
+                  ),
+                ),
+              ),
+              SizedBox(height: Dimensions.height10),
+              // Email field
+              SizedBox(
                 width: Dimensions.width300,
                 height: Dimensions.height30,
-                margin: EdgeInsets.fromLTRB(
-                  0,
-                  Dimensions.height10,
-                  0,
-                  Dimensions.height5,
-                ),
                 child: TextField(
                   controller: _email,
                   keyboardType: TextInputType.emailAddress,
@@ -167,15 +177,11 @@ class _ProfilePageState extends State<ProfileLogin> {
                   ),
                 ),
               ),
-              Container(
+              SizedBox(height: Dimensions.height10),
+              // Password Field
+              SizedBox(
                 width: Dimensions.width300,
                 height: Dimensions.height30,
-                margin: EdgeInsets.fromLTRB(
-                  0,
-                  Dimensions.height5,
-                  0,
-                  Dimensions.height10,
-                ),
                 child: TextField(
                   controller: _password,
                   enableSuggestions: false,
@@ -216,51 +222,79 @@ class _ProfilePageState extends State<ProfileLogin> {
                   ),
                 ),
               ),
-              Column(
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      final email = _email.text;
-                      final password = _password.text;
+              SizedBox(height: Dimensions.height10),
+              // LOGIN Button
+              SizedBox(
+                width: Dimensions.width340,
+                child: Column(
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        final email = _email.text;
+                        final password = _password.text;
 
-                      context.read<AuthBloc>().add(AuthLogIn(email: email, password: password));
-                    },
-                    child: const Text(
-                      'LOGIN',
-                      style: TextStyle(
-                        color: Color(0xff333333),
-                      ),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(Dimensions.border10),
-                      ),
-                      primary: const Color(0xff8EB4FF),
-                      side: const BorderSide(
-                        color: Color(0xffFFAE2D),
-                      ),
-                      fixedSize: Size(Dimensions.width340, Dimensions.height30),
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pushNamedAndRemoveUntil(context, registerRoute, (route) => true);
-                    },
-                    child: Container(
-                      width: Dimensions.width340,
-                      padding: EdgeInsets.only(left: Dimensions.width10),
-                      child: Text(
-                        'No profile? Register here.',
+                        context.read<AuthBloc>().add(AuthLogIn(email: email, password: password));
+                      },
+                      child: const Text(
+                        'LOGIN',
                         style: TextStyle(
-                          decoration: TextDecoration.underline,
-                          color: const Color(0xff333333),
-                          fontSize: Dimensions.font10,
-                          fontWeight: FontWeight.w600,
+                          color: Color(0xff333333),
                         ),
                       ),
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(Dimensions.border10),
+                        ),
+                        primary: const Color(0xff8EB4FF),
+                        side: const BorderSide(
+                          color: Color(0xffFFAE2D),
+                        ),
+                        fixedSize: Size(Dimensions.width340, Dimensions.height30),
+                      ),
                     ),
-                  ),
-                ],
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pushNamedAndRemoveUntil(context, registerRoute, (route) => true);
+                          },
+                          child: Container(
+                            //width: Dimensions.width340,
+                            padding: EdgeInsets.only(left: Dimensions.width10),
+                            child: Text(
+                              'No profile? Register here.',
+                              style: TextStyle(
+                                decoration: TextDecoration.underline,
+                                color: const Color(0xff333333),
+                                fontSize: Dimensions.font10,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pushNamedAndRemoveUntil(context, resetPasswordRoute, (route) => true);
+                          },
+                          child: Container(
+                            //width: Dimensions.width340,
+                            padding: EdgeInsets.only(left: Dimensions.width10),
+                            child: Text(
+                              'Forgotten password? Click here.',
+                              style: TextStyle(
+                                decoration: TextDecoration.underline,
+                                color: const Color(0xff333333),
+                                fontSize: Dimensions.font10,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

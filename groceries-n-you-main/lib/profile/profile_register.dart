@@ -71,16 +71,11 @@ class _ProfileRegisterPageState extends State<ProfileRegister> {
       body: Center(
         child: Column(
           children: [
+            SizedBox(height: Dimensions.height10),
             // name
-            Container(
+            SizedBox(
               width: Dimensions.width300,
               height: Dimensions.height30,
-              margin: EdgeInsets.fromLTRB(
-                0,
-                Dimensions.height10,
-                0,
-                Dimensions.height5,
-              ),
               child: TextField(
                 controller: _name,
                 autocorrect: false,
@@ -102,16 +97,11 @@ class _ProfileRegisterPageState extends State<ProfileRegister> {
                 ),
               ),
             ),
+            SizedBox(height: Dimensions.height10),
             // email
-            Container(
+            SizedBox(
               width: Dimensions.width300,
               height: Dimensions.height30,
-              margin: EdgeInsets.fromLTRB(
-                0,
-                Dimensions.height5,
-                0,
-                Dimensions.height5,
-              ),
               child: TextField(
                 controller: _email,
                 keyboardType: TextInputType.emailAddress,
@@ -134,16 +124,11 @@ class _ProfileRegisterPageState extends State<ProfileRegister> {
                 ),
               ),
             ),
+            SizedBox(height: Dimensions.height10),
             // password
-            Container(
+            SizedBox(
               width: Dimensions.width300,
               height: Dimensions.height30,
-              margin: EdgeInsets.fromLTRB(
-                0,
-                Dimensions.height5,
-                0,
-                Dimensions.height5,
-              ),
               child: TextField(
                 controller: _password,
                 enableSuggestions: false,
@@ -182,16 +167,11 @@ class _ProfileRegisterPageState extends State<ProfileRegister> {
                 ),
               ),
             ),
+            SizedBox(height: Dimensions.height10),
             // address
-            Container(
+            SizedBox(
               width: Dimensions.width300,
               height: Dimensions.height30,
-              margin: EdgeInsets.fromLTRB(
-                0,
-                Dimensions.height5,
-                0,
-                Dimensions.height5,
-              ),
               child: TextField(
                 controller: _address,
                 autocorrect: false,
@@ -213,16 +193,11 @@ class _ProfileRegisterPageState extends State<ProfileRegister> {
                 ),
               ),
             ),
+            SizedBox(height: Dimensions.height10),
             // phone
-            Container(
+            SizedBox(
               width: Dimensions.width300,
               height: Dimensions.height30,
-              margin: EdgeInsets.fromLTRB(
-                0,
-                Dimensions.height5,
-                0,
-                Dimensions.height10,
-              ),
               child: TextField(
                 controller: _phone,
                 autocorrect: false,
@@ -244,6 +219,7 @@ class _ProfileRegisterPageState extends State<ProfileRegister> {
                 ),
               ),
             ),
+            SizedBox(height: Dimensions.height10),
             Column(
               children: [
                 BlocListener<AuthBloc, AuthState>(
