@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:groceries_n_you/custom_widget_functions.dart';
 import 'package:groceries_n_you/dimensions.dart';
 import 'package:groceries_n_you/constants/routes.dart';
@@ -9,6 +11,8 @@ import 'package:groceries_n_you/services/auth/auth_exceptions.dart';
 import 'package:groceries_n_you/services/auth/auth_service.dart';
 import 'package:groceries_n_you/services/crud/orders_service.dart';
 
+import '../blocs/blocs.dart';
+import '../services/auth/user_auth_state.dart';
 import '../utils/dialogs/error_dialog.dart';
 import '../myWidgets/widgets.dart';
 
@@ -242,19 +246,29 @@ class _ProfileRegisterPageState extends State<ProfileRegister> {
             ),
             Column(
               children: [
-                ElevatedButton(
-                  onPressed: () async {
-                    final email = _email.text;
-                    final password = _password.text;
-                    final name = _name.text;
-                    final address = _address.text;
-                    final phone = _phone.text;
-                    try {
-                      await AuthService.firebase().createUser(
-                        name: name,
-                        email: email,
-                        password: password,
-                      );
+                BlocListener<AuthBloc, AuthState>(
+                  listener: (context, state) async {
+                    if (state is AuthStateRegistering) {
+                      if (state.exception is WeakPasswordAuthException) {
+                        await showErrorDialog(context, 'Password is too weak!');
+                      } else if (state.exception is EmailAlreadyInUseAuthException) {
+                        await showErrorDialog(context, 'There is already an account with that email!');
+                      } else if (state.exception is InvalidEmailAuthException) {
+                        await showErrorDialog(context, 'Invalid email!');
+                      } else if (state.exception is GenericAuthException) {
+                        await showErrorDialog(context, 'Authentication error!');
+                      }
+                    }
+                  },
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      final email = _email.text;
+                      final password = _password.text;
+                      final name = _name.text;
+                      final address = _address.text;
+                      final phone = _phone.text;
+
+                      context.read<AuthBloc>().add(AuthRegister(email: email, password: password, name: name));
                       final user = AuthService.firebase().currentUser;
                       await userRepository.createUser(
                         UserModel(
@@ -265,61 +279,29 @@ class _ProfileRegisterPageState extends State<ProfileRegister> {
                           phone: phone,
                         ),
                       );
-                      await _ordersService.createUser(
-                        name: name,
-                        email: email,
-                        address: address,
-                        phone: phone,
-                      );
-                      await AuthService.firebase().sendEmailVerification();
-                      await CustomWidgets.mySnackBarWidget(
-                        context,
-                        'Verification email sent!',
-                      );
-                      Navigator.of(context).pushNamed(verifyRoute);
-                    } on WeakPasswordAuthException {
-                      await showErrorDialog(
-                        context,
-                        'Password is too weak!',
-                      );
-                    } on EmailAlreadyInUseAuthException {
-                      await showErrorDialog(
-                        context,
-                        'There is already an account with that email!',
-                      );
-                    } on InvalidEmailAuthException {
-                      await showErrorDialog(
-                        context,
-                        'Invalid email!',
-                      );
-                    } on GenericAuthException {
-                      showErrorDialog(
-                        context,
-                        'Authentication error',
-                      );
-                    }
-                  },
-                  child: const Text(
-                    'REGISTER',
-                    style: TextStyle(
-                      color: Color(0xff333333),
+                      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const UserAuthState()), (route) => false);
+                    },
+                    child: const Text(
+                      'REGISTER',
+                      style: TextStyle(
+                        color: Color(0xff333333),
+                      ),
                     ),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(Dimensions.border10),
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(Dimensions.border10),
+                      ),
+                      primary: const Color(0xff8EB4FF),
+                      side: const BorderSide(
+                        color: Color(0xffFFAE2D),
+                      ),
+                      fixedSize: Size(Dimensions.width340, Dimensions.height30),
                     ),
-                    primary: const Color(0xff8EB4FF),
-                    side: const BorderSide(
-                      color: Color(0xffFFAE2D),
-                    ),
-                    fixedSize: Size(Dimensions.width340, Dimensions.height30),
                   ),
                 ),
                 TextButton(
                   onPressed: () {
-                    Navigator.of(context)
-                        .pushNamedAndRemoveUntil(loginRoute, (route) => false);
+                    Navigator.of(context).pushNamedAndRemoveUntil(loginRoute, ((route) => true));
                   },
                   child: Container(
                     width: Dimensions.width340,

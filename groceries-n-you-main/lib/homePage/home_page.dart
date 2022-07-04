@@ -14,14 +14,14 @@ class HomePage extends StatelessWidget {
   static Route route() {
     return MaterialPageRoute(
       settings: const RouteSettings(name: homeRoute),
-      builder: (_) => const HomePage(),
+      builder: (context) => const HomePage(),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(),
+      appBar: const MyAppBar(),
       drawer: const MyDrawer(),
       floatingActionButton: const MyFloatingButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,

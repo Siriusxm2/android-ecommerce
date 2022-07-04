@@ -1,34 +1,38 @@
 part of 'auth_bloc.dart';
 
-enum AuthStatus { unknown, authenticated, unauthenticated }
+@immutable
+abstract class AuthState {
+  final bool isLoading;
+  final String? loadingText;
 
-class AuthState extends Equatable {
-  final AuthStatus status;
-  final auth.User? authUser;
-  final UserModel? user;
+  const AuthState({required this.isLoading, this.loadingText = 'Please wait a moment'});
+}
 
-  const AuthState._({
-    this.status = AuthStatus.unknown,
-    this.authUser,
-    this.user,
-  });
+class AuthStateUninitialized extends AuthState {
+  const AuthStateUninitialized({required bool isLoading}) : super(isLoading: isLoading);
+}
 
-  const AuthState.unknown() : this._();
+class AuthStateLoggedIn extends AuthState {
+  final dynamic user;
 
-  const AuthState.authenticated({
-    required auth.User authUser,
-    required UserModel user,
-  }) : this._(
-          status: AuthStatus.authenticated,
-          authUser: authUser,
-          user: user,
-        );
+  const AuthStateLoggedIn({required this.user, required bool isLoading}) : super(isLoading: isLoading);
+}
 
-  const AuthState.unauthenticated()
-      : this._(
-          status: AuthStatus.unauthenticated,
-        );
+class AuthStateNeedVerification extends AuthState {
+  const AuthStateNeedVerification({required bool isLoading}) : super(isLoading: isLoading);
+}
+
+class AuthStateLoggedOut extends AuthState with EquatableMixin {
+  final Exception? exception;
+
+  const AuthStateLoggedOut({required this.exception, required bool isLoading, String? loadingText}) : super(isLoading: isLoading, loadingText: loadingText);
 
   @override
-  List<Object?> get props => [status, authUser, user];
+  List<Object?> get props => [exception, isLoading];
+}
+
+class AuthStateRegistering extends AuthState {
+  final Exception? exception;
+
+  const AuthStateRegistering({required this.exception, required bool isLoading}) : super(isLoading: isLoading);
 }

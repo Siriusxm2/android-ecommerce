@@ -13,8 +13,7 @@ class ProfileViewNotLogged extends StatelessWidget {
             children: [
               ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context)
-                      .pushNamedAndRemoveUntil(loginRoute, (route) => true);
+                  Navigator.pushNamedAndRemoveUntil(context, loginRoute, (route) => true);
                 },
                 child: const Text(
                   'Log in',
@@ -31,8 +30,7 @@ class ProfileViewNotLogged extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context)
-                      .pushNamedAndRemoveUntil(registerRoute, (route) => true);
+                  Navigator.pushNamedAndRemoveUntil(context, registerRoute, (route) => true);
                 },
                 child: const Text(
                   'Register',

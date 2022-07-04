@@ -4,19 +4,12 @@ import '/repositories/repositories.dart';
 class AuthRepository extends BaseAuthRepository {
   final auth.FirebaseAuth _firebaseAuth;
 
-  AuthRepository({auth.FirebaseAuth? firebaseAuth})
-      : _firebaseAuth = firebaseAuth ?? auth.FirebaseAuth.instance;
+  AuthRepository({auth.FirebaseAuth? firebaseAuth}) : _firebaseAuth = firebaseAuth ?? auth.FirebaseAuth.instance;
 
   @override
-  Future<auth.User?> signUp({
-    required String email,
-    required String password,
-  }) async {
+  Future<auth.User?> signUp({required String email, required String password}) async {
     try {
-      final credential = await _firebaseAuth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+      final credential = await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
 
       final user = credential.user;
       return user;
@@ -24,15 +17,9 @@ class AuthRepository extends BaseAuthRepository {
   }
 
   @override
-  Future<void> logInWithEmailAndPassword({
-    required String email,
-    required String password,
-  }) async {
+  Future<void> logInWithEmailAndPassword({required String email, required String password}) async {
     try {
-      await _firebaseAuth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+      await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
     } catch (_) {}
   }
 

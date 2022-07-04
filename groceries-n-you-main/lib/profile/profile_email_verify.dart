@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:groceries_n_you/constants/routes.dart';
 import 'package:groceries_n_you/custom_widget_functions.dart';
 import 'package:groceries_n_you/dimensions.dart';
 import 'package:groceries_n_you/services/auth/auth_service.dart';
 
+import '../blocs/blocs.dart';
 import '../myWidgets/widgets.dart';
 
 class VerifyEmail extends StatelessWidget {
@@ -49,7 +51,7 @@ class VerifyEmail extends StatelessWidget {
               children: [
                 ElevatedButton(
                   onPressed: () async {
-                    await AuthService.firebase().sendEmailVerification();
+                    context.read<AuthBloc>().add(const AuthSendEmailVerificaiton());
                     await CustomWidgets.mySnackBarWidget(
                       context,
                       'Verification email sent!',
@@ -69,12 +71,9 @@ class VerifyEmail extends StatelessWidget {
                   ),
                 ),
                 ElevatedButton(
-                  onPressed: () async {
-                    await AuthService.firebase().logOut();
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                      loginRoute,
-                      (route) => false,
-                    );
+                  onPressed: () {
+                    context.read<AuthBloc>().add(const AuthLogOut());
+                    Navigator.of(context).pushNamedAndRemoveUntil(loginRoute, (route) => false);
                   },
                   child: const Text(
                     'Log in',

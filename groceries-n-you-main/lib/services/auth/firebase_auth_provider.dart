@@ -5,34 +5,18 @@ import 'package:groceries_n_you/firebase/firebase_options.dart';
 import 'package:groceries_n_you/services/auth/auth_user.dart';
 import 'package:groceries_n_you/services/auth/auth_provider.dart';
 import 'package:groceries_n_you/services/auth/auth_exceptions.dart';
-import 'package:firebase_auth/firebase_auth.dart'
-    show
-        FacebookAuthProvider,
-        FirebaseAuth,
-        FirebaseAuthException,
-        GoogleAuthProvider,
-        OAuthCredential,
-        UserCredential;
+import 'package:firebase_auth/firebase_auth.dart' show FacebookAuthProvider, FirebaseAuth, FirebaseAuthException, GoogleAuthProvider, OAuthCredential, UserCredential;
 
 class FirebaseAuthProvider extends AuthProvider {
   @override
   Future<void> initialize() async {
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
+    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   }
 
   @override
-  Future<AuthUser> createUser({
-    required String name,
-    required String email,
-    required String password,
-  }) async {
+  Future<AuthUser> createUser({required String name, required String email, required String password}) async {
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
       final user = currentUser;
       if (user != null) {
         await FirebaseAuth.instance.currentUser!.updateDisplayName(name);
@@ -75,6 +59,7 @@ class FirebaseAuthProvider extends AuthProvider {
         email: email,
         password: password,
       );
+      await Future.delayed(const Duration(seconds: 2));
       final user = currentUser;
       if (user != null) {
         return user;
@@ -133,8 +118,7 @@ class FirebaseAuthProvider extends AuthProvider {
     final LoginResult result = await FacebookAuth.instance.login();
     if (result.status == LoginStatus.success) {
       // Create a credential from the access token
-      final OAuthCredential credential =
-          FacebookAuthProvider.credential(result.accessToken!.token);
+      final OAuthCredential credential = FacebookAuthProvider.credential(result.accessToken!.token);
       // Once signed in, return the UserCredential
       return await FirebaseAuth.instance.signInWithCredential(credential);
     }
@@ -147,8 +131,7 @@ class FirebaseAuthProvider extends AuthProvider {
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
     // Obtain the auth details from the request
-    final GoogleSignInAuthentication? googleAuth =
-        await googleUser?.authentication;
+    final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
     // Create a new credential
     final credential = GoogleAuthProvider.credential(
       accessToken: googleAuth?.accessToken,

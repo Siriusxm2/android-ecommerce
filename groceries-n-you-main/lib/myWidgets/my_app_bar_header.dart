@@ -36,10 +36,8 @@ class MyAppBarHeader extends StatelessWidget implements PreferredSizeWidget {
                   IconButton(
                     iconSize: 30.0,
                     onPressed: () {
-                      if (ModalRoute.of(context)!.settings.name !=
-                          profileRoute) {
-                        Navigator.of(context).pushNamedAndRemoveUntil(
-                            profileRoute, (route) => true);
+                      if (ModalRoute.of(context)!.settings.name != profileRoute) {
+                        Navigator.of(context).pushNamedAndRemoveUntil(profileRoute, (route) => true);
                       }
                     },
                     icon: const Icon(Icons.person_outline),
@@ -51,8 +49,7 @@ class MyAppBarHeader extends StatelessWidget implements PreferredSizeWidget {
                   child: GestureDetector(
                     onTap: () {
                       if (ModalRoute.of(context)!.settings.name != homeRoute) {
-                        Navigator.of(context)
-                            .pushNamedAndRemoveUntil(homeRoute, (_) => false);
+                        Navigator.of(context).pushNamedAndRemoveUntil(homeRoute, (_) => false);
                       }
                     },
                     child: Image.asset(
@@ -68,13 +65,12 @@ class MyAppBarHeader extends StatelessWidget implements PreferredSizeWidget {
           ),
           automaticallyImplyLeading: false,
           actions: [
-            const MySearchWidget(),
+            Container(margin: EdgeInsets.only(right: Dimensions.width10), child: const MySearchWidget()),
             IconButton(
               iconSize: 28.0,
               onPressed: () {
                 if (ModalRoute.of(context)!.settings.name != cartRoute) {
-                  Navigator.of(context)
-                      .pushNamedAndRemoveUntil(cartRoute, (route) => true);
+                  Navigator.of(context).pushNamedAndRemoveUntil(cartRoute, (route) => true);
                 }
               },
               icon: const Icon(Icons.shopping_cart),
