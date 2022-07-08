@@ -53,10 +53,8 @@ class HomePage extends StatelessWidget {
 
 class CategoryCarousel extends StatelessWidget {
   final List<CategoryModel> categories;
-  const CategoryCarousel({
-    Key? key,
-    required this.categories,
-  }) : super(key: key);
+
+  const CategoryCarousel({Key? key, required this.categories}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -77,20 +75,13 @@ class CategoryCarousel extends StatelessWidget {
 class CategoryCard extends StatelessWidget {
   final CategoryModel category;
 
-  const CategoryCard({
-    Key? key,
-    required this.category,
-  }) : super(key: key);
+  const CategoryCard({Key? key, required this.category}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.of(context).pushNamedAndRemoveUntil(
-          categoryRoute,
-          (route) => true,
-          arguments: category,
-        );
+        Navigator.of(context).pushNamedAndRemoveUntil(categoryRoute, (route) => true, arguments: category);
       },
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: Dimensions.width15),

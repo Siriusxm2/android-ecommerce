@@ -22,8 +22,6 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
     SelectPaymentMethod event,
     Emitter<PaymentState> emit,
   ) {
-    emit(
-      PaymentLoaded(paymentMethodModel: event.paymentMethodModel),
-    );
+    emit(PaymentLoaded(paymentMethodModel: event.paymentMethodModel));
   }
 }

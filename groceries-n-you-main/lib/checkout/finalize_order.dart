@@ -43,16 +43,13 @@ class FinalizePage extends StatelessWidget {
                     child: BlocBuilder<CheckoutBloc, CheckoutState>(
                       builder: (context, state) {
                         if (state is CheckoutLoading) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
+                          return const Center(child: CircularProgressIndicator());
                         }
                         if (state is CheckoutLoaded) {
                           return Column(
                             children: [
                               Padding(
-                                padding: EdgeInsets.only(
-                                    bottom: Dimensions.height10),
+                                padding: EdgeInsets.only(bottom: Dimensions.height10),
                                 child: Center(
                                   child: Text(
                                     'Delivery Information',
@@ -67,23 +64,9 @@ class FinalizePage extends StatelessWidget {
                               _customRow(context, 'Email:', state.email!),
                               _customRow(context, 'Address:', state.address!),
                               _customRow(context, 'Phone:', state.phone!),
-                              _customRow(
-                                context,
-                                'Delivery Date:',
-                                state.deliveryDate!,
-                              ),
-                              _customRow(
-                                context,
-                                'Delivery Hour:',
-                                state.deliveryTime!,
-                              ),
-                              _customRow(
-                                context,
-                                'Payment Method:',
-                                state.paymentMethod == PaymentMethodModel.cash
-                                    ? 'Cash'
-                                    : 'Debit Card',
-                              ),
+                              _customRow(context, 'Delivery Date:', state.deliveryDate!),
+                              _customRow(context, 'Delivery Hour:', state.deliveryTime!),
+                              _customRow(context, 'Payment Method:', state.paymentMethod == PaymentMethodModel.cash ? 'Cash' : 'Debit Card'),
                             ],
                           );
                         } else {
@@ -117,8 +100,7 @@ class FinalizePage extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Padding(
-                                padding: EdgeInsets.only(
-                                    bottom: Dimensions.height10),
+                                padding: EdgeInsets.only(bottom: Dimensions.height10),
                                 child: Center(
                                   child: Text(
                                     'Cart',
@@ -129,14 +111,10 @@ class FinalizePage extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              _customRow(context, 'Subtotal:',
-                                  '${state.subtotal!.toStringAsFixed(2)} лв.'),
-                              _customRow(context, 'Delivery Fee:',
-                                  '${state.deliveryFee!.toStringAsFixed(2)} лв.'),
-                              _customRow(context, 'Voucher:',
-                                  '-${state.voucher!.toStringAsFixed(2)} лв.'),
-                              _customRow(context, 'Total:',
-                                  '${state.total!.toStringAsFixed(2)} лв.'),
+                              _customRow(context, 'Subtotal:', '${state.subtotal!.toStringAsFixed(2)} лв.'),
+                              _customRow(context, 'Delivery Fee:', '${state.deliveryFee!.toStringAsFixed(2)} лв.'),
+                              _customRow(context, 'Voucher:', '-${state.voucher!.toStringAsFixed(2)} лв.'),
+                              _customRow(context, 'Total:', '${state.total!.toStringAsFixed(2)} лв.'),
                             ],
                           );
                         } else {
@@ -149,9 +127,7 @@ class FinalizePage extends StatelessWidget {
                   BlocBuilder<CheckoutBloc, CheckoutState>(
                     builder: (context, state) {
                       if (state is CheckoutLoading) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
+                        return const Center(child: CircularProgressIndicator());
                       }
                       if (state is CheckoutLoaded) {
                         return Container(
@@ -165,10 +141,7 @@ class FinalizePage extends StatelessWidget {
                             onPressed: () async {
                               switch (state.paymentMethod) {
                                 case PaymentMethodModel.cash:
-                                  context.read<CheckoutBloc>().add(
-                                        ConfirmCheckout(
-                                            checkout: state.checkout),
-                                      );
+                                  context.read<CheckoutBloc>().add(ConfirmCheckout(checkout: state.checkout));
                                   Navigator.of(context).pushNamedAndRemoveUntil(
                                     orderSuccessRoute,
                                     (route) => false,
@@ -184,8 +157,7 @@ class FinalizePage extends StatelessWidget {
                                     amount: state.total!,
                                   );
                                   context.read<CheckoutBloc>().add(
-                                        ConfirmCheckout(
-                                            checkout: state.checkout),
+                                        ConfirmCheckout(checkout: state.checkout),
                                       );
                                   Navigator.of(context).pushNamedAndRemoveUntil(
                                     orderSuccessRoute,
@@ -194,10 +166,7 @@ class FinalizePage extends StatelessWidget {
                                   break;
 
                                 default:
-                                  context.read<CheckoutBloc>().add(
-                                        ConfirmCheckout(
-                                            checkout: state.checkout),
-                                      );
+                                  context.read<CheckoutBloc>().add(ConfirmCheckout(checkout: state.checkout));
                                   Navigator.of(context).pushNamedAndRemoveUntil(
                                     orderSuccessRoute,
                                     (route) => false,

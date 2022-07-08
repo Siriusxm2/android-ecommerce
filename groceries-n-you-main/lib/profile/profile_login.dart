@@ -312,6 +312,7 @@ class _ProfilePageState extends State<ProfileLogin> {
                             final password = _password.text;
 
                             context.read<AuthBloc>().add(AuthLogIn(email: email, password: password));
+                            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const UserAuthState()), (route) => false);
                           },
                           child: const Text(
                             'LOGIN',

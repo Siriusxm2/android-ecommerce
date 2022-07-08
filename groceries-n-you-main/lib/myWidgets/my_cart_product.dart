@@ -41,9 +41,7 @@ class MyCartProductWidget extends StatelessWidget {
               ),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: Dimensions.width10),
-                width: MediaQuery.of(context).size.width -
-                    Dimensions.width20 -
-                    (Dimensions.width80 + Dimensions.width12),
+                width: MediaQuery.of(context).size.width - Dimensions.width20 - (Dimensions.width80 + Dimensions.width12),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -68,9 +66,7 @@ class MyCartProductWidget extends StatelessWidget {
                           ),
                           onPressed: () {
                             for (int i = 0; i < quantity; i++) {
-                              context
-                                  .read<CartBloc>()
-                                  .add(RemoveProduct(product));
+                              context.read<CartBloc>().add(RemoveProduct(product));
                             }
                           },
                         ),
@@ -105,70 +101,59 @@ class MyCartProductWidget extends StatelessWidget {
                     borderRadius: BorderRadius.circular(5),
                     color: const Color(0xffFFBE57),
                   ),
-                  child: BlocBuilder<CartBloc, CartState>(
-                    builder: (context, state) {
-                      return Row(
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              if (quantity != 1) {
-                                context
-                                    .read<CartBloc>()
-                                    .add(RemoveProduct(product));
-                              }
-                            },
-                            child: const Icon(
-                              Icons.remove,
-                              color: Colors.white,
-                              size: 30,
+                  child: Row(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          if (quantity != 1) {
+                            context.read<CartBloc>().add(RemoveProduct(product));
+                          }
+                        },
+                        child: const Icon(
+                          Icons.remove,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                      ),
+                      Container(
+                        width: Dimensions.width30,
+                        height: Dimensions.height30,
+                        alignment: Alignment.center,
+                        decoration: const BoxDecoration(
+                          border: Border(
+                            left: BorderSide(
+                              color: Color(0xff333333),
+                              width: 1,
+                            ),
+                            right: BorderSide(
+                              color: Color(0xff333333),
+                              width: 1,
                             ),
                           ),
-                          Container(
-                            width: Dimensions.width30,
-                            height: Dimensions.height30,
-                            alignment: Alignment.center,
-                            decoration: const BoxDecoration(
-                              border: Border(
-                                left: BorderSide(
-                                  color: Color(0xff333333),
-                                  width: 1,
-                                ),
-                                right: BorderSide(
-                                  color: Color(0xff333333),
-                                  width: 1,
-                                ),
-                              ),
-                              color: Colors.white,
-                            ),
-                            child: Text(
-                              '$quantity',
-                              style: TextStyle(
-                                fontSize: Dimensions.font18,
-                              ),
-                            ),
+                          color: Colors.white,
+                        ),
+                        child: Text(
+                          '$quantity',
+                          style: TextStyle(
+                            fontSize: Dimensions.font18,
                           ),
-                          InkWell(
-                            onTap: () {
-                              context.read<CartBloc>().add(AddProduct(product));
-                            },
-                            child: const Icon(
-                              Icons.add,
-                              color: Colors.white,
-                              size: 30,
-                            ),
-                          ),
-                        ],
-                      );
-                    },
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          context.read<CartBloc>().add(AddProduct(product));
+                        },
+                        child: const Icon(
+                          Icons.add,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 Text(
-                  product.isOnSale
-                      ? (product.price -
-                                  (product.price * product.saleAmount / 100))
-                              .toStringAsFixed(2) +
-                          ' лв.'
-                      : product.price.toStringAsFixed(2) + ' лв.',
+                  product.isOnSale ? (product.price - (product.price * product.saleAmount / 100)).toStringAsFixed(2) + ' лв.' : product.price.toStringAsFixed(2) + ' лв.',
                   style: TextStyle(
                     fontSize: Dimensions.font14,
                     fontWeight: FontWeight.w700,

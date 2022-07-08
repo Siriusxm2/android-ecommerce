@@ -96,15 +96,9 @@ class MyOrderSummaryWidget extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.only(right: Dimensions.width5),
                       child: Text(
-                        voucher == 'TEST10'
-                            ? (state.cart.totalDouble - 10.00)
-                                    .toStringAsFixed(2) +
-                                ' лв.'
-                            : state.cart.totalDouble.toStringAsFixed(2) +
-                                ' лв.',
+                        voucher == 'TEST10' ? (state.cart.totalDouble - 10.00).toStringAsFixed(2) + ' лв.' : state.cart.totalDouble.toStringAsFixed(2) + ' лв.',
                         style: TextStyle(
-                          fontSize: Dimensions.font14 +
-                              (Dimensions.font14 / Dimensions.font14),
+                          fontSize: Dimensions.font14 + (Dimensions.font14 / Dimensions.font14),
                           fontWeight: FontWeight.w800,
                         ),
                       ),

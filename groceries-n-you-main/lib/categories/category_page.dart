@@ -85,9 +85,7 @@ class _CategoryPageState extends State<CategoryPage> {
                 IconButton(
                   icon: Icon(
                     CustomIcons.gridView,
-                    color: _gridState
-                        ? const Color(0xff333333)
-                        : const Color(0xffcccccc),
+                    color: _gridState ? const Color(0xff333333) : const Color(0xffcccccc),
                   ),
                   onPressed: () {
                     setState(() {
@@ -100,9 +98,7 @@ class _CategoryPageState extends State<CategoryPage> {
                 IconButton(
                   icon: Icon(
                     CustomIcons.listView,
-                    color: _listState
-                        ? const Color(0xff333333)
-                        : const Color(0xffcccccc),
+                    color: _listState ? const Color(0xff333333) : const Color(0xffcccccc),
                   ),
                   onPressed: () {
                     setState(() {
@@ -113,10 +109,7 @@ class _CategoryPageState extends State<CategoryPage> {
                 ),
               ],
             ),
-            const Divider(
-              thickness: 1,
-              color: Color(0xffcccccc),
-            ),
+            const Divider(thickness: 1, color: Color(0xffcccccc)),
             BlocBuilder<ProductBloc, ProductState>(
               builder: (context, state) {
                 if (state is ProductLoading) {
@@ -125,9 +118,7 @@ class _CategoryPageState extends State<CategoryPage> {
                   );
                 }
                 if (state is ProductLoaded) {
-                  final List<ProductModel> categoryProducts = state.products
-                      .where((product) => product.category == category.name)
-                      .toList();
+                  final List<ProductModel> categoryProducts = state.products.where((product) => product.category == category.name).toList();
                   return Container(
                     margin: EdgeInsets.only(top: Dimensions.height10),
                     //width: MediaQuery.of(context).size.width - Dimensions.width40,
@@ -162,10 +153,8 @@ class _CategoryPageState extends State<CategoryPage> {
 
 class ProductTypeCarousel extends StatelessWidget {
   final String text;
-  const ProductTypeCarousel({
-    Key? key,
-    required this.text,
-  }) : super(key: key);
+
+  const ProductTypeCarousel({Key? key, required this.text}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

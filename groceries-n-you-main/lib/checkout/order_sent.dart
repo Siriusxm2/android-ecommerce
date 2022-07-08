@@ -17,74 +17,69 @@ class OrderSentPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(),
+      appBar: const MyAppBar(),
       drawer: const MyDrawer(),
       floatingActionButton: const MyFloatingButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       bottomNavigationBar: const MyBottomNavbar(),
       body: Center(
-        child: Column(
-          children: [
-            Container(
-              margin: EdgeInsets.only(
-                top: Dimensions.height60,
-                bottom: Dimensions.height5,
+        child: Padding(
+          padding: EdgeInsets.only(top: Dimensions.height60, left: Dimensions.width10, right: Dimensions.width10),
+          child: Column(
+            children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width - Dimensions.width20,
+                child: Image.asset(
+                  'assets/order_succ_ad.png',
+                  fit: BoxFit.fill,
+                ),
               ),
-              width: MediaQuery.of(context).size.width - Dimensions.width20,
-              child: Image.asset(
-                'assets/order_succ_ad.png',
-                fit: BoxFit.fill,
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                bottom: Dimensions.height30,
-              ),
-              child: Text(
-                'ORDER SENT SUCCESSFULLY',
+              SizedBox(height: Dimensions.height5),
+              Text(
+                'ПОРЪЧКАТА Е ИЗПРАТЕНА УСПЕШНО',
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: Dimensions.font24,
                   fontWeight: FontWeight.w600,
                 ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(bottom: Dimensions.height20),
-              child: Text(
-                'You should recieve a confirmation email shortly.',
+              SizedBox(height: Dimensions.height30),
+              Text(
+                'Ще получите имейл за потвърждение скоро.',
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: Dimensions.font14,
                   fontWeight: FontWeight.w600,
                 ),
               ),
-            ),
-            SizedBox(
-              height: Dimensions.height40,
-              width: Dimensions.width80 * 3,
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamedAndRemoveUntil(
-                    homeRoute,
-                    (route) => false,
-                  );
-                },
-                child: Text(
-                  'BACK TO HOME PAGE',
-                  style: TextStyle(
-                    fontSize: Dimensions.font16,
-                    fontWeight: FontWeight.w600,
-                    color: const Color(0xff333333),
+              SizedBox(height: Dimensions.height20),
+              SizedBox(
+                height: Dimensions.height40,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                      homeRoute,
+                      (route) => false,
+                    );
+                  },
+                  child: Text(
+                    'КЪМ НАЧАЛНАТА СТРАНИЦА',
+                    style: TextStyle(
+                      fontSize: Dimensions.font16,
+                      fontWeight: FontWeight.w600,
+                      color: const Color(0xff333333),
+                    ),
                   ),
-                ),
-                style: ElevatedButton.styleFrom(
-                  primary: const Color(0xff8EB4FF),
-                  side: const BorderSide(
-                    color: Color(0xffFFAE2D),
+                  style: ElevatedButton.styleFrom(
+                    primary: const Color(0xff8EB4FF),
+                    side: const BorderSide(
+                      color: Color(0xffFFAE2D),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

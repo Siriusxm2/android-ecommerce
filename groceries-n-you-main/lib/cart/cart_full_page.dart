@@ -37,8 +37,7 @@ class _CartFullPageState extends State<CartFullPage> {
                   // image
                   Container(
                     margin: EdgeInsets.only(top: Dimensions.height20),
-                    width:
-                        MediaQuery.of(context).size.width - Dimensions.width20,
+                    width: MediaQuery.of(context).size.width - Dimensions.width20,
                     height: Dimensions.height150 + Dimensions.height10,
                     child: Image.asset(
                       'assets/cart_add.png',
@@ -51,8 +50,7 @@ class _CartFullPageState extends State<CartFullPage> {
                       top: Dimensions.height20,
                       bottom: Dimensions.height10,
                     ),
-                    width:
-                        MediaQuery.of(context).size.width - Dimensions.width20,
+                    width: MediaQuery.of(context).size.width - Dimensions.width20,
                     height: Dimensions.height50 / 2,
                     color: const Color(0xffB4CDFF),
                     alignment: Alignment.center,
@@ -67,26 +65,16 @@ class _CartFullPageState extends State<CartFullPage> {
                   ),
                   // PRODUCT SHOWCASE
                   SizedBox(
-                    width:
-                        MediaQuery.of(context).size.width - Dimensions.width20,
+                    width: MediaQuery.of(context).size.width - Dimensions.width20,
                     child: LimitedBox(
                       maxHeight: Dimensions.height200 + Dimensions.height180,
                       child: ListView.builder(
                         shrinkWrap: true,
-                        itemCount: state.cart
-                            .productQuantity(state.cart.products)
-                            .keys
-                            .length,
+                        itemCount: state.cart.productQuantity(state.cart.products).keys.length,
                         itemBuilder: (context, index) {
                           return MyCartProductWidget(
-                            product: state.cart
-                                .productQuantity(state.cart.products)
-                                .keys
-                                .elementAt(index),
-                            quantity: state.cart
-                                .productQuantity(state.cart.products)
-                                .values
-                                .elementAt(index),
+                            product: state.cart.productQuantity(state.cart.products).keys.elementAt(index),
+                            quantity: state.cart.productQuantity(state.cart.products).values.elementAt(index),
                           );
                         },
                       ),
@@ -106,8 +94,7 @@ class _CartFullPageState extends State<CartFullPage> {
                   // voucher
                   Container(
                     margin: EdgeInsets.symmetric(vertical: Dimensions.height10),
-                    width:
-                        MediaQuery.of(context).size.width - Dimensions.width20,
+                    width: MediaQuery.of(context).size.width - Dimensions.width20,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -168,13 +155,9 @@ class _CartFullPageState extends State<CartFullPage> {
                                 },
                                 child: const Text('Add'),
                               ),
-                              contentPadding: EdgeInsets.only(
-                                  left: Dimensions.width12,
-                                  right: Dimensions.width10 / 5),
+                              contentPadding: EdgeInsets.only(left: Dimensions.width12, right: Dimensions.width10 / 5),
                               border: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(Dimensions.border10),
-                                ),
+                                borderRadius: BorderRadius.all(Radius.circular(Dimensions.border10)),
                                 borderSide: const BorderSide(
                                   color: Color(0xffD4D4D4),
                                 ),

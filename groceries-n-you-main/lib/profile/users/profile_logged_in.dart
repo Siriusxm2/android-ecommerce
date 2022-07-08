@@ -7,21 +7,11 @@ import 'package:groceries_n_you/services/auth/user_auth_state.dart';
 import '../../blocs/blocs.dart';
 import '../../utils/dialogs/log_out_dialog.dart';
 
-class ProfileViewLogged extends StatefulWidget {
+class ProfileViewLogged extends StatelessWidget {
   const ProfileViewLogged({Key? key}) : super(key: key);
 
-  @override
-  State<ProfileViewLogged> createState() => _ProfileViewLoggedState();
-}
-
-class _ProfileViewLoggedState extends State<ProfileViewLogged> {
   String get userEmail => AuthService.firebase().currentUser!.email!;
   String? get displayName => AuthService.firebase().currentUser!.displayName;
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {

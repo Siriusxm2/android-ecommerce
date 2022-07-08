@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
         title: "Groceries 'N' You",
         theme: ThemeData(primarySwatch: generateMaterialColor(color: const Color(0xff699BFF))),
         onGenerateRoute: PageRouter.onGenerateRoute,
-        initialRoute: splashRoute,
+        // initialRoute: splashRoute,
         home: const UserAuthState(),
       ),
     );

@@ -52,10 +52,7 @@ class CustomWidgets {
               color: const Color(0xff333333),
             ),
             children: [
-              TextSpan(
-                  text: result < 1
-                      ? salePrice.toStringAsFixed(2)
-                      : result.toStringAsFixed(2)),
+              TextSpan(text: result < 1 ? salePrice.toStringAsFixed(2) : result.toStringAsFixed(2)),
               const TextSpan(text: ' лв.'),
             ],
           ),
@@ -92,10 +89,7 @@ class CustomWidgets {
               color: const Color(0xff333333),
             ),
             children: [
-              TextSpan(
-                  text: result < 1
-                      ? originalPrice.toStringAsFixed(2)
-                      : result.toStringAsFixed(2)),
+              TextSpan(text: result < 1 ? originalPrice.toStringAsFixed(2) : result.toStringAsFixed(2)),
               const TextSpan(text: ' лв.'),
             ],
           ),
@@ -125,10 +119,7 @@ class CustomWidgets {
               color: const Color(0xff333333),
             ),
             children: [
-              TextSpan(
-                  text: result < 1
-                      ? salePrice.toStringAsFixed(2)
-                      : result.toStringAsFixed(2)),
+              TextSpan(text: result < 1 ? salePrice.toStringAsFixed(2) : result.toStringAsFixed(2)),
               const TextSpan(text: ' лв.'),
             ],
           ),
@@ -172,10 +163,7 @@ class CustomWidgets {
               color: const Color(0xff333333),
             ),
             children: [
-              TextSpan(
-                  text: result < 1
-                      ? originalPrice.toStringAsFixed(2)
-                      : result.toStringAsFixed(2)),
+              TextSpan(text: result < 1 ? originalPrice.toStringAsFixed(2) : result.toStringAsFixed(2)),
               const TextSpan(text: ' лв.'),
             ],
           ),
@@ -278,8 +266,7 @@ class CustomWidgets {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: promotionGrid(
-              product.isOnSale, product.price, product.saleAmount, quantity),
+          children: promotionGrid(product.isOnSale, product.price, product.saleAmount, quantity),
         ),
         // Old Price
         Stack(
@@ -404,8 +391,7 @@ class CustomWidgets {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: promotionGrid(
-              product.isOnSale, product.price, product.saleAmount, quantity),
+          children: promotionGrid(product.isOnSale, product.price, product.saleAmount, quantity),
         ),
       ];
     }
@@ -432,9 +418,7 @@ class CustomWidgets {
           ),
         ),
         Container(
-          width: (Dimensions.width115 * 2) +
-              Dimensions.width5 +
-              (Dimensions.width8 / 4),
+          width: (Dimensions.width115 * 2) + Dimensions.width5 + (Dimensions.width8 / 4),
           padding: EdgeInsets.only(left: Dimensions.width20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -516,8 +500,7 @@ class CustomWidgets {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: promotionList(product.isOnSale, product.price,
-                        product.saleAmount, quantity),
+                    children: promotionList(product.isOnSale, product.price, product.saleAmount, quantity),
                   ),
                 ],
               ),
@@ -546,13 +529,10 @@ class CustomWidgets {
                           ),
                           minimumSize: Size.zero,
                           padding: EdgeInsets.zero,
-                          fixedSize: Size(Dimensions.height50 / 2,
-                              Dimensions.width50 + Dimensions.width5),
-                          maximumSize: Size(Dimensions.height50 / 2,
-                              Dimensions.width50 + Dimensions.width5),
+                          fixedSize: Size(Dimensions.height50 / 2, Dimensions.width50 + Dimensions.width5),
+                          maximumSize: Size(Dimensions.height50 / 2, Dimensions.width50 + Dimensions.width5),
                           shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.circular(Dimensions.border5),
+                            borderRadius: BorderRadius.circular(Dimensions.border5),
                           ),
                         ),
                         onPressed: () {},
@@ -591,9 +571,7 @@ class CustomWidgets {
           ),
         ),
         Container(
-          width: (Dimensions.width115 * 2) +
-              Dimensions.width5 +
-              (Dimensions.width8 / 4),
+          width: (Dimensions.width115 * 2) + Dimensions.width5 + (Dimensions.width8 / 4),
           padding: EdgeInsets.only(left: Dimensions.width20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -642,8 +620,7 @@ class CustomWidgets {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: promotionList(product.isOnSale, product.price,
-                      product.saleAmount, quantity),
+                  children: promotionList(product.isOnSale, product.price, product.saleAmount, quantity),
                 ),
               ),
               // Buy button
@@ -671,13 +648,10 @@ class CustomWidgets {
                           ),
                           minimumSize: Size.zero,
                           padding: EdgeInsets.zero,
-                          fixedSize: Size(Dimensions.height50 / 2,
-                              Dimensions.width50 + Dimensions.width5),
-                          maximumSize: Size(Dimensions.height50 / 2,
-                              Dimensions.width50 + Dimensions.width5),
+                          fixedSize: Size(Dimensions.height50 / 2, Dimensions.width50 + Dimensions.width5),
+                          maximumSize: Size(Dimensions.height50 / 2, Dimensions.width50 + Dimensions.width5),
                           shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.circular(Dimensions.border5),
+                            borderRadius: BorderRadius.circular(Dimensions.border5),
                           ),
                         ),
                         onPressed: () {},

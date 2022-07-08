@@ -74,52 +74,6 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
           ],
         ),
-        // !expanded
-        //     ? Stack()
-        //     : Stack(
-        //         children: [
-        //           Center(
-        //             child: Container(
-        //               width: MediaQuery.of(context).size.width,
-        //               height: Dimensions.height50,
-        //               decoration: const BoxDecoration(
-        //                 color: Color(0xffffffff),
-        //               ),
-        //               child: Container(
-        //                 margin: EdgeInsets.only(top: Dimensions.height10),
-        //                 padding: EdgeInsets.symmetric(
-        //                     horizontal: Dimensions.height20),
-        //                 alignment: Alignment.center,
-        //                 child: TextFormField(
-        //                   decoration: InputDecoration(
-        //                     border: OutlineInputBorder(
-        //                       borderRadius: BorderRadius.all(
-        //                         Radius.circular(Dimensions.border5),
-        //                       ),
-        //                       borderSide: const BorderSide(
-        //                         color: Color(0xffD4D4D4),
-        //                       ),
-        //                     ),
-        //                     hintText: 'Delivery date',
-        //                     hintStyle: const TextStyle(
-        //                       color: Color(0xff959595),
-        //                     ),
-        //                     contentPadding:
-        //                         EdgeInsets.only(left: Dimensions.width10),
-        //                     suffixIcon: InkWell(
-        //                       onTap: () {},
-        //                       child: const Icon(
-        //                         Icons.insert_invitation,
-        //                         color: Color(0xffcccccc),
-        //                       ),
-        //                     ),
-        //                   ),
-        //                 ),
-        //               ),
-        //             ),
-        //           ),
-        //         ],
-        //       ),
       ],
     );
   }

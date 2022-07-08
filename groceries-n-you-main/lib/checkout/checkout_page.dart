@@ -77,8 +77,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                 return Expanded(
                   child: SingleChildScrollView(
                     child: Container(
-                      margin:
-                          EdgeInsets.symmetric(vertical: Dimensions.height20),
+                      margin: EdgeInsets.symmetric(vertical: Dimensions.height20),
                       child: Column(
                         children: [
                           // Order info
@@ -92,8 +91,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Padding(
-                                  padding: EdgeInsets.only(
-                                      bottom: Dimensions.height10),
+                                  padding: EdgeInsets.only(bottom: Dimensions.height10),
                                   child: Text(
                                     'Enter order information',
                                     style: TextStyle(
@@ -127,9 +125,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                 _customTextFormField(
                                   (value) {
                                     orderInfoAddress = value;
-                                    context
-                                        .read<CheckoutBloc>()
-                                        .add(UpdateCheckout(address: value));
+                                    context.read<CheckoutBloc>().add(UpdateCheckout(address: value));
                                   },
                                   context,
                                   'Order Address',
@@ -138,9 +134,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                 _customTextFormField(
                                   (value) {
                                     orderInfoPhone = value;
-                                    context
-                                        .read<CheckoutBloc>()
-                                        .add(UpdateCheckout(phone: value));
+                                    context.read<CheckoutBloc>().add(UpdateCheckout(phone: value));
                                   },
                                   context,
                                   'Phone',
@@ -165,8 +159,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Padding(
-                                  padding: EdgeInsets.only(
-                                      bottom: Dimensions.height10),
+                                  padding: EdgeInsets.only(bottom: Dimensions.height10),
                                   child: Text(
                                     'Delivery date',
                                     style: TextStyle(
@@ -177,8 +170,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                 ),
                                 // Delivery date
                                 Padding(
-                                  padding: EdgeInsets.only(
-                                      bottom: Dimensions.height5),
+                                  padding: EdgeInsets.only(bottom: Dimensions.height5),
                                   child: SizedBox(
                                     height: Dimensions.height30,
                                     child: TextFormField(
@@ -197,8 +189,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                         hintStyle: const TextStyle(
                                           color: Color(0xff959595),
                                         ),
-                                        contentPadding: EdgeInsets.only(
-                                            left: Dimensions.width10),
+                                        contentPadding: EdgeInsets.only(left: Dimensions.width10),
                                         suffixIcon: InkWell(
                                           onTap: () {
                                             _selectDate(context);
@@ -214,18 +205,15 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                 ),
                                 // delivery hour
                                 Padding(
-                                  padding: EdgeInsets.only(
-                                      bottom: Dimensions.height5),
+                                  padding: EdgeInsets.only(bottom: Dimensions.height5),
                                   child: SizedBox(
                                     height: Dimensions.height30,
                                     child: InputDecorator(
                                       child: DropdownButtonHideUnderline(
                                         child: DropdownButton(
                                           value: chosenHour,
-                                          icon: const Icon(
-                                              Icons.keyboard_arrow_down),
-                                          items:
-                                              deliveryHours.map((String hour) {
+                                          icon: const Icon(Icons.keyboard_arrow_down),
+                                          items: deliveryHours.map((String hour) {
                                             return DropdownMenuItem(
                                               value: hour,
                                               child: Text(hour),
@@ -235,9 +223,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                             setState(() {
                                               chosenHour = value!;
                                             });
-                                            context.read<CheckoutBloc>().add(
-                                                UpdateCheckout(
-                                                    deliveryTime: value));
+                                            context.read<CheckoutBloc>().add(UpdateCheckout(deliveryTime: value));
                                           },
                                         ),
                                       ),
@@ -254,8 +240,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                         hintStyle: const TextStyle(
                                           color: Color(0xff959595),
                                         ),
-                                        contentPadding: EdgeInsets.only(
-                                            left: Dimensions.width10),
+                                        contentPadding: EdgeInsets.only(left: Dimensions.width10),
                                       ),
                                     ),
                                   ),
@@ -271,16 +256,13 @@ class _CheckoutPageState extends State<CheckoutPage> {
                           ),
                           // Payment method
                           Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: Dimensions.width20),
+                            padding: EdgeInsets.symmetric(horizontal: Dimensions.width20),
                             child: ElevatedButton(
                               onPressed: () {
                                 showModalBottomSheet(
                                   context: context,
                                   shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.vertical(
-                                      top: Radius.circular(Dimensions.border10),
-                                    ),
+                                    borderRadius: BorderRadius.vertical(top: Radius.circular(Dimensions.border10)),
                                   ),
                                   builder: (context) {
                                     return Padding(
@@ -289,51 +271,31 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                         left: Dimensions.width10,
                                         right: Dimensions.width10,
                                       ),
-                                      child: BlocBuilder<PaymentBloc,
-                                          PaymentState>(
+                                      child: BlocBuilder<PaymentBloc, PaymentState>(
                                         builder: (context, state) {
                                           if (state is PaymentLoading) {
-                                            return const Center(
-                                              child:
-                                                  CircularProgressIndicator(),
-                                            );
+                                            return const Center(child: CircularProgressIndicator());
                                           }
                                           if (state is PaymentLoaded) {
                                             return Column(
                                               children: [
                                                 SizedBox(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width -
-                                                      Dimensions.width20,
+                                                  width: MediaQuery.of(context).size.width - Dimensions.width20,
                                                   child: ElevatedButton(
                                                     onPressed: () {
-                                                      context
-                                                          .read<PaymentBloc>()
-                                                          .add(
-                                                            const SelectPaymentMethod(
-                                                              paymentMethodModel:
-                                                                  PaymentMethodModel
-                                                                      .cash,
-                                                            ),
-                                                          );
-
+                                                      context.read<PaymentBloc>().add(const SelectPaymentMethod(paymentMethodModel: PaymentMethodModel.cash));
                                                       Navigator.pop(context);
                                                     },
-                                                    style: ElevatedButton
-                                                        .styleFrom(
-                                                      primary: const Color(
-                                                          0xff8EB4FF),
+                                                    style: ElevatedButton.styleFrom(
+                                                      primary: const Color(0xff8EB4FF),
                                                     ),
                                                     child: Center(
                                                       child: Stack(
                                                         children: [
                                                           Positioned(
-                                                            top: -(Dimensions
-                                                                .height5),
+                                                            top: -(Dimensions.height5),
                                                             left: 0,
-                                                            child: Image.asset(
-                                                                'assets/cash_pay.png'),
+                                                            child: Image.asset('assets/cash_pay.png'),
                                                           ),
                                                           const Align(
                                                             child: Text('Cash'),
@@ -344,38 +306,27 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                                   ),
                                                 ),
                                                 SizedBox(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width -
-                                                      Dimensions.width20,
+                                                  width: MediaQuery.of(context).size.width - Dimensions.width20,
                                                   child: ElevatedButton(
                                                     onPressed: () {
-                                                      context
-                                                          .read<PaymentBloc>()
-                                                          .add(
+                                                      context.read<PaymentBloc>().add(
                                                             const SelectPaymentMethod(
-                                                              paymentMethodModel:
-                                                                  PaymentMethodModel
-                                                                      .creditCard,
+                                                              paymentMethodModel: PaymentMethodModel.creditCard,
                                                             ),
                                                           );
 
                                                       Navigator.pop(context);
                                                     },
-                                                    style: ElevatedButton
-                                                        .styleFrom(
-                                                      primary: const Color(
-                                                          0xff8EB4FF),
+                                                    style: ElevatedButton.styleFrom(
+                                                      primary: const Color(0xff8EB4FF),
                                                     ),
                                                     child: Center(
                                                       child: Stack(
                                                         children: [
                                                           Positioned(
-                                                            top: -(Dimensions
-                                                                .height5),
+                                                            top: -(Dimensions.height5),
                                                             left: 0,
-                                                            child: Image.asset(
-                                                                'assets/card_pay.png'),
+                                                            child: Image.asset('assets/card_pay.png'),
                                                           ),
                                                           const Align(
                                                             child: Text('Card'),
@@ -388,9 +339,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                               ],
                                             );
                                           } else {
-                                            return const Text(
-                                              'Something went wrong!',
-                                            );
+                                            return const Text('Something went wrong!');
                                           }
                                         },
                                       ),
@@ -401,17 +350,13 @@ class _CheckoutPageState extends State<CheckoutPage> {
                               child: const Center(
                                 child: Text(
                                   'Select Payment',
-                                  style: TextStyle(
-                                    color: Color(0xff333333),
-                                  ),
+                                  style: TextStyle(color: Color(0xff333333)),
                                 ),
                               ),
                               style: ElevatedButton.styleFrom(
                                 padding: EdgeInsets.zero,
                                 primary: const Color(0xff8EB4FF),
-                                side: const BorderSide(
-                                  color: Color(0xffFFAE2D),
-                                ),
+                                side: const BorderSide(color: Color(0xffFFAE2D)),
                               ),
                             ),
                           ),
@@ -433,11 +378,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
                               onPressed: () {
                                 context.read<CheckoutBloc>().add(
                                       UpdateCheckout(
-                                        name: (user != null)
-                                            ? user!.displayName
-                                            : null,
-                                        email:
-                                            (user != null) ? user!.email : null,
+                                        name: (user != null) ? user!.displayName : null,
+                                        email: (user != null) ? user!.email : null,
                                         deliveryDate: _dateController.text,
                                       ),
                                     );

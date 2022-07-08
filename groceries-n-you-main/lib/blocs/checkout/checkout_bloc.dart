@@ -15,7 +15,9 @@ part 'checkout_event.dart';
 part 'checkout_state.dart';
 
 class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
+  // ignore: unused_field
   final CartBloc _cartBloc;
+  // ignore: unused_field
   final PaymentBloc _paymentBloc;
   final CheckoutRepository _checkoutRepository;
   StreamSubscription? _cartSubscription;
@@ -54,10 +56,7 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
     });
   }
 
-  void _onUpdateCheckout(
-    UpdateCheckout event,
-    Emitter<CheckoutState> emit,
-  ) {
+  void _onUpdateCheckout(UpdateCheckout event, Emitter<CheckoutState> emit) {
     final state = this.state;
     if (state is CheckoutLoaded) {
       emit(
@@ -79,10 +78,7 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
     }
   }
 
-  void _onConfirmCheckout(
-    ConfirmCheckout event,
-    Emitter<CheckoutState> emit,
-  ) async {
+  void _onConfirmCheckout(ConfirmCheckout event, Emitter<CheckoutState> emit) async {
     final state = this.state;
     _checkoutSubscription?.cancel();
     if (state is CheckoutLoaded) {

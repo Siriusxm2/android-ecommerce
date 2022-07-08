@@ -29,9 +29,7 @@ class PageRouter {
       case cartRoute:
         return CartPage.route();
       case categoryRoute:
-        return CategoryPage.route(
-          category: settings.arguments as CategoryModel,
-        );
+        return CategoryPage.route(category: settings.arguments as CategoryModel);
       case checkoutRoute:
         return CheckoutPage.route();
       case finalizeRoute:
@@ -65,12 +63,8 @@ class PageRouter {
     return MaterialPageRoute(
       settings: const RouteSettings(name: '/error'),
       builder: (_) => Scaffold(
-        appBar: AppBar(
-          title: const Text('Error'),
-        ),
-        body: const Center(
-          child: Text('Something went wrong!'),
-        ),
+        appBar: AppBar(title: const Text('Error')),
+        body: const Center(child: Text('Something went wrong!')),
       ),
     );
   }

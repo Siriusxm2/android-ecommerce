@@ -89,17 +89,6 @@ class FirebaseAuthProvider extends AuthProvider {
   }
 
   @override
-  Future<void> delete() async {
-    final user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      user.delete();
-      await FirebaseAuth.instance.signOut();
-    } else {
-      throw UserNotLoggedInAuthException();
-    }
-  }
-
-  @override
   Future<void> sendEmailVerification() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {

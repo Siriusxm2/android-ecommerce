@@ -45,12 +45,12 @@ class _ProfileSettingsViewState extends State<ProfileSettingsView> {
               onPressed: () async {
                 final shouldDelete = await showDeleteDialog(context);
                 if (shouldDelete) {
-                  await _ordersService.deleteUser(email: userEmail);
-                  await AuthService.firebase().delete();
-                  Navigator.of(context).pushNamedAndRemoveUntil(
-                    homeRoute,
-                    (route) => false,
-                  );
+                  // await _ordersService.deleteUser(email: userEmail);
+                  // await AuthService.firebase().delete();
+                  // Navigator.of(context).pushNamedAndRemoveUntil(
+                  //   homeRoute,
+                  //   (route) => false,
+                  // );
                 }
               },
               child: const Text(

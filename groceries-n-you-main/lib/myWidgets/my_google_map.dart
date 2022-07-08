@@ -14,21 +14,12 @@ class _MyGoogleMapsState extends State<MyGoogleMaps> {
     zoom: 16,
   );
 
-  //GoogleMapController _googleMapController;
-
-  // @override
-  // void dispose() {
-  //   _googleMapController.dispose();
-  //   super.dispose();
-  // }
-
   @override
   Widget build(BuildContext context) {
     return const GoogleMap(
       myLocationButtonEnabled: false,
       zoomControlsEnabled: false,
       initialCameraPosition: _initialCameraPos,
-      //onMapCreated: (controller) => _googleMapController = controller,
     );
   }
 }

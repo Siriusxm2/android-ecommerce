@@ -9,8 +9,7 @@ import '../blocs/blocs.dart';
 class MyPopupProductWidget extends StatefulWidget {
   final ProductModel product;
 
-  const MyPopupProductWidget({Key? key, required this.product})
-      : super(key: key);
+  const MyPopupProductWidget({Key? key, required this.product}) : super(key: key);
 
   @override
   State<MyPopupProductWidget> createState() => _MyPopupProductWidgetState();
@@ -76,9 +75,7 @@ class _MyPopupProductWidgetState extends State<MyPopupProductWidget> {
                   left: Dimensions.width15,
                   right: Dimensions.width15,
                 ),
-                width: Dimensions.width360 -
-                    Dimensions.width15 -
-                    Dimensions.width145,
+                width: Dimensions.width360 - Dimensions.width15 - Dimensions.width145,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -111,8 +108,7 @@ class _MyPopupProductWidgetState extends State<MyPopupProductWidget> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: CustomWidgets.promotionGrid(product.isOnSale,
-                          product.price, product.saleAmount, quantity),
+                      children: CustomWidgets.promotionGrid(product.isOnSale, product.price, product.saleAmount, quantity),
                     ),
                     // add button
                     Padding(
@@ -164,9 +160,7 @@ class _MyPopupProductWidgetState extends State<MyPopupProductWidget> {
                                         color: Colors.white,
                                       ),
                                       child: Text(
-                                        quantity < 1
-                                            ? '1'
-                                            : quantity.toString(),
+                                        quantity < 1 ? '1' : quantity.toString(),
                                         style: TextStyle(
                                           fontSize: Dimensions.font18,
                                         ),
@@ -189,19 +183,13 @@ class _MyPopupProductWidgetState extends State<MyPopupProductWidget> {
                               ),
                             ],
                           ),
-                          BlocBuilder<CartBloc, CartState>(
-                            builder: (context, state) {
-                              return InkWell(
-                                onTap: () {
-                                  for (int i = 0; i < quantity; i++) {
-                                    context
-                                        .read<CartBloc>()
-                                        .add(AddProduct(product));
-                                  }
-                                },
-                                child: Image.asset('assets/cart.png'),
-                              );
+                          InkWell(
+                            onTap: () {
+                              for (int i = 0; i < quantity; i++) {
+                                context.read<CartBloc>().add(AddProduct(product));
+                              }
                             },
+                            child: Image.asset('assets/cart.png'),
                           ),
                         ],
                       ),

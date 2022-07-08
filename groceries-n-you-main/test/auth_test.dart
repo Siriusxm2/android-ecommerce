@@ -28,17 +28,14 @@ void main() {
       expect(provider.currentUser, null);
     });
 
-    test(
-      'Should be able to initialize in less than 2 seconds',
-      () async {
-        await provider.initialize();
-        expect(provider.isInitialized, true);
-      },
-      timeout: const Timeout(Duration(seconds: 2)),
-    );
+    test('Should be able to initialize in less than 2 seconds', () async {
+      await provider.initialize();
+      expect(provider.isInitialized, true);
+    }, timeout: const Timeout(Duration(seconds: 2)));
 
     test('Create user should delegate to logIn function', () async {
       final badEmailUser = provider.createUser(
+        name: 'Test',
         email: 'foo@bar.com',
         password: '1232132',
       );
@@ -47,6 +44,7 @@ void main() {
         throwsA(const TypeMatcher<UserNotFoundAuthException>()),
       );
       final badPasswordUser = provider.createUser(
+        name: 'Test',
         email: 'some@email.com',
         password: 'foobar',
       );
@@ -55,6 +53,7 @@ void main() {
         throwsA(const TypeMatcher<WrongPasswordAuthException>()),
       );
       final user = await provider.createUser(
+        name: 'Test',
         email: 'foo',
         password: 'bar',
       );
@@ -78,19 +77,36 @@ void main() {
       final user = provider.currentUser;
       expect(user, isNotNull);
     });
+
+    test('Should be able to send password reset email', () async {
+      final badEmail = provider.sendPasswordReset(toEmail: 'foobar');
+      expect(
+        badEmail,
+        throwsA(const TypeMatcher<UserNotFoundAuthException>()),
+      );
+
+      await provider.sendPasswordReset(toEmail: 'foo');
+      expect(provider.didSend, true);
+    });
   });
 }
 
 class NotInitializedException implements Exception {}
 
 class MockAuthProvider implements AuthProvider {
-  var _isInitialized = false;
+  bool _isInitialized = false;
+  bool _didSend = false;
   AuthUser? _user;
 
   bool get isInitialized => _isInitialized;
+  bool get didSend => _didSend;
+
+  @override
+  AuthUser? get currentUser => _user;
 
   @override
   Future<AuthUser> createUser({
+    required String name,
     required String email,
     required String password,
   }) async {
@@ -101,9 +117,6 @@ class MockAuthProvider implements AuthProvider {
       password: password,
     );
   }
-
-  @override
-  AuthUser? get currentUser => _user;
 
   @override
   Future<void> initialize() async {
@@ -119,7 +132,7 @@ class MockAuthProvider implements AuthProvider {
     if (!isInitialized) throw NotInitializedException();
     if (email == 'foo@bar.com') throw UserNotFoundAuthException();
     if (password == 'foobar') throw WrongPasswordAuthException();
-    const user = AuthUser(email: 'foo', isEmailVerified: false);
+    const user = AuthUser(id: 'jashd2xf3', email: 'foo', isEmailVerified: false, displayName: 'Test');
     _user = user;
     return Future.value(user);
   }
@@ -137,7 +150,7 @@ class MockAuthProvider implements AuthProvider {
     if (!isInitialized) throw NotInitializedException();
     final user = _user;
     if (user == null) throw UserNotFoundAuthException();
-    const newUser = AuthUser(email: 'foo', isEmailVerified: true);
+    const newUser = AuthUser(id: 'jashd2xf3', email: 'foo', isEmailVerified: true, displayName: 'Test');
     _user = newUser;
   }
 
@@ -149,5 +162,12 @@ class MockAuthProvider implements AuthProvider {
   @override
   Future<UserCredential?> signInWithGoogle() {
     throw UnimplementedError();
+  }
+
+  @override
+  Future<void> sendPasswordReset({required String toEmail}) async {
+    if (!isInitialized) throw NotInitializedException();
+    if (toEmail == 'foobar') throw UserNotFoundAuthException();
+    _didSend = true;
   }
 }
