@@ -9,11 +9,7 @@ class MyProductWidget extends StatelessWidget {
   final ProductModel product;
   final bool view;
 
-  const MyProductWidget({
-    Key? key,
-    required this.product,
-    required this.view,
-  }) : super(key: key);
+  const MyProductWidget({Key? key, required this.product, required this.view}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

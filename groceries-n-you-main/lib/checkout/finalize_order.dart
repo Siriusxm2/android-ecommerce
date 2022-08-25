@@ -10,6 +10,7 @@ import 'package:groceries_n_you/models/models.dart';
 import 'package:http/http.dart' as http;
 
 import '../blocs/blocs.dart';
+import '../constants/prices.dart';
 import '../myWidgets/widgets.dart';
 
 class FinalizePage extends StatelessWidget {
@@ -156,13 +157,13 @@ class FinalizePage extends StatelessWidget {
                                     name: state.name!,
                                     amount: state.total!,
                                   );
-                                  context.read<CheckoutBloc>().add(
-                                        ConfirmCheckout(checkout: state.checkout),
-                                      );
+                                  context.read<CheckoutBloc>().add(ConfirmCheckout(checkout: state.checkout));
                                   Navigator.of(context).pushNamedAndRemoveUntil(
                                     orderSuccessRoute,
                                     (route) => false,
                                   );
+                                  context.read<CartBloc>().add(ResetCart());
+                                  pricesVoucher = 0.0;
                                   break;
 
                                 default:

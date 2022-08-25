@@ -151,6 +151,7 @@ class _CartFullPageState extends State<CartFullPage> {
                                 onPressed: () {
                                   setState(() {
                                     voucher = _voucher.text;
+                                    pricesVoucher = voucher == 'TEST10' ? 10.00 : 0;
                                   });
                                 },
                                 child: const Text('Add'),
@@ -186,7 +187,6 @@ class _CartFullPageState extends State<CartFullPage> {
                       onPressed: () {
                         pricesSubTotal = state.cart.subtotal;
                         pricesDeliveryFee = 5;
-                        pricesVoucher = voucher == 'TEST10' ? 10.00 : 0;
                         Navigator.of(context).pushNamedAndRemoveUntil(
                           checkoutRoute,
                           (route) => true,

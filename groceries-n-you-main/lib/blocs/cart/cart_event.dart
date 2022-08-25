@@ -29,3 +29,8 @@ class RemoveProduct extends CartEvent {
   @override
   List<Object> get props => [product];
 }
+
+class ResetCart extends CartEvent {
+  @override
+  List<Object> get props => [];
+}

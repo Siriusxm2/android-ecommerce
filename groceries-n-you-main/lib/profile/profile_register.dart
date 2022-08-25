@@ -241,20 +241,11 @@ class _ProfileRegisterPageState extends State<ProfileRegister> {
                       final email = _email.text;
                       final password = _password.text;
                       final name = _name.text;
-                      final address = _address.text;
-                      final phone = _phone.text;
+                      // final address = _address.text;
+                      // final phone = _phone.text;
 
                       context.read<AuthBloc>().add(AuthRegister(email: email, password: password, name: name));
-                      final user = AuthService.firebase().currentUser;
-                      await userRepository.createUser(
-                        UserModel(
-                          id: user!.id,
-                          name: name,
-                          email: email,
-                          address: address,
-                          phone: phone,
-                        ),
-                      );
+                      // final user = AuthService.firebase().currentUser;
                       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const UserAuthState()), (route) => false);
                     },
                     child: const Text(

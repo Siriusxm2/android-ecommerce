@@ -40,8 +40,7 @@ class _MyDrawerState extends State<MyDrawer> {
                   ),
                   height: Dimensions.height140,
                   child: DrawerHeader(
-                    padding:
-                        EdgeInsets.symmetric(vertical: Dimensions.height16),
+                    padding: EdgeInsets.symmetric(vertical: Dimensions.height16),
                     child: Row(
                       children: [
                         Container(
@@ -50,8 +49,7 @@ class _MyDrawerState extends State<MyDrawer> {
                           color: const Color(0xffFFAE2D),
                         ),
                         Container(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: Dimensions.width5),
+                          padding: EdgeInsets.symmetric(horizontal: Dimensions.width5),
                           child: Text(
                             'CATEGORIES',
                             style: TextStyle(
@@ -74,8 +72,7 @@ class _MyDrawerState extends State<MyDrawer> {
                   ),
                 ),
                 SizedBox(
-                  height:
-                      MediaQuery.of(context).size.height - Dimensions.height140,
+                  height: MediaQuery.of(context).size.height - Dimensions.height140,
                   child: ListView.builder(
                     itemCount: state.categories.length,
                     itemBuilder: (context, index) {
@@ -84,8 +81,7 @@ class _MyDrawerState extends State<MyDrawer> {
                           ListView.builder(
                             physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
-                            itemCount:
-                                state.categories[index].subcategories.length,
+                            itemCount: state.categories[index].subcategories.length,
                             itemBuilder: (context2, index2) {
                               return MyListTileSub(
                                 state.categories[index].subcategories[index2],

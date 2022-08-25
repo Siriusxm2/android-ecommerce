@@ -58,6 +58,9 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
 
   void _onUpdateCheckout(UpdateCheckout event, Emitter<CheckoutState> emit) {
     final state = this.state;
+    if (state is CheckoutLoading) {
+      emit(CheckoutLoaded());
+    }
     if (state is CheckoutLoaded) {
       emit(
         CheckoutLoaded(

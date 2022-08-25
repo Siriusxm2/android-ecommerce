@@ -535,7 +535,9 @@ class CustomWidgets {
                             borderRadius: BorderRadius.circular(Dimensions.border5),
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          context.read<CartBloc>().add(AddProduct(product));
+                        },
                         child: Text(
                           '+ BUY',
                           style: TextStyle(
@@ -654,7 +656,9 @@ class CustomWidgets {
                             borderRadius: BorderRadius.circular(Dimensions.border5),
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          context.read<CartBloc>().add(AddProduct(product));
+                        },
                         child: Text(
                           '+ BUY',
                           style: TextStyle(

@@ -105,17 +105,10 @@ class MockAuthProvider implements AuthProvider {
   AuthUser? get currentUser => _user;
 
   @override
-  Future<AuthUser> createUser({
-    required String name,
-    required String email,
-    required String password,
-  }) async {
+  Future<AuthUser> createUser({required String name, required String email, required String password}) async {
     if (!isInitialized) throw NotInitializedException();
     await Future.delayed(const Duration(seconds: 1));
-    return logIn(
-      email: email,
-      password: password,
-    );
+    return logIn(email: email, password: password);
   }
 
   @override
@@ -125,10 +118,7 @@ class MockAuthProvider implements AuthProvider {
   }
 
   @override
-  Future<AuthUser> logIn({
-    required String email,
-    required String password,
-  }) async {
+  Future<AuthUser> logIn({required String email, required String password}) async {
     if (!isInitialized) throw NotInitializedException();
     if (email == 'foo@bar.com') throw UserNotFoundAuthException();
     if (password == 'foobar') throw WrongPasswordAuthException();

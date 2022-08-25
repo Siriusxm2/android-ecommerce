@@ -21,20 +21,19 @@ class CartModel extends Equatable {
     return quantity;
   }
 
-  double get subtotal =>
-      products.fold(0, (total, current) => total + current.price);
+  double get subtotal => products.fold(0, (total, current) => total + current.price);
 
   double get deliveryFee => 5.00;
 
-  double total(subtotal, deliveryFee) {
-    return subtotal + deliveryFee;
+  double total(subtotal, deliveryFee, voucher) {
+    return subtotal + deliveryFee - voucher;
   }
 
   double get voucher => pricesVoucher;
 
   String get subtotalString => subtotal.toStringAsFixed(2) + ' лв.';
 
-  double get totalDouble => total(subtotal, deliveryFee);
+  double get totalDouble => total(subtotal, deliveryFee, voucher);
 
   @override
   List<Object?> get props => [products];
